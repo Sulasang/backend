@@ -1,4 +1,4 @@
-rootProject.name = "su-la-sang"
-include("api")
-include("domain")
-include("crawler")
+rootProject.name = "sulasang"
+include("sulasang-api")
+include("sulasang-domain")
+include("sulasang-crawler")
