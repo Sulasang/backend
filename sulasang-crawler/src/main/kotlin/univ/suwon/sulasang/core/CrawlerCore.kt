@@ -45,7 +45,6 @@ class CrawlerCore(
 
             if (studentDietDatum[COMPANY] == "Chef Table") {
                 if (studentDietDatum[MONDAY] != null) {
-                    println("셰프 테이블 월요일 삽입")
                     insertStudentDietNotContainingCommonMenu(
                         studentDietDatum,
                         mondayDate,
@@ -55,7 +54,6 @@ class CrawlerCore(
                 }
 
                 if (studentDietDatum[TUESDAY] != null) {
-                    println("셰프 테이블 화요일 삽입")
                     insertStudentDietNotContainingCommonMenu(
                         studentDietDatum,
                         mondayDate,
