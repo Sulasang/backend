@@ -363,25 +363,29 @@ class CrawlerCore(
                     mondayDate,
                     MONDAY,
                 )
-            } else if (staffDietDataDatum[TUESDAY] != null) {
+            }
+            if (staffDietDataDatum[TUESDAY] != null) {
                 insertStaffDiet(
                     staffDietDataDatum,
                     mondayDate,
                     TUESDAY,
                 )
-            } else if (staffDietDataDatum[WEDNESDAY] != null) {
+            }
+            if (staffDietDataDatum[WEDNESDAY] != null) {
                 insertStaffDiet(
                     staffDietDataDatum,
                     mondayDate,
                     WEDNESDAY,
                 )
-            } else if (staffDietDataDatum[THURSDAY] != null) {
+            }
+            if (staffDietDataDatum[THURSDAY] != null) {
                 insertStaffDiet(
                     staffDietDataDatum,
                     mondayDate,
                     THURSDAY,
                 )
-            } else if (staffDietDataDatum[FRIDAY] != null) {
+            }
+            if (staffDietDataDatum[FRIDAY] != null) {
                 insertStaffDiet(
                     staffDietDataDatum,
                     mondayDate,
