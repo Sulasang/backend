@@ -1,6 +1,6 @@
-package univ.suwon.sulasang.domain.staff.dto
+package univ.suwon.sulasang.domain.legacy.staff.dto
 
-import univ.suwon.sulasang.domain.core.staffdiet.StaffDiet
+import univ.suwon.sulasang.domain.core.legacy.staffdiet.StaffDiet
 
 data class StaffDietRetrieveResponse(
     val link: String,

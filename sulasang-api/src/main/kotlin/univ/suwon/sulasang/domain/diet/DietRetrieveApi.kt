@@ -16,7 +16,7 @@ class DietRetrieveApi(
 ) {
 
     @GetMapping
-    fun retrieveDietTop4(): ResponseForm<DietRetrieveResponse> {
+    fun retrieveWeeklyDiet(): ResponseForm<DietRetrieveResponse> {
         return success(
             httpStatus = HttpStatus.OK,
             result = DietRetrieveResponse.of(dietRetrieve.executeForTop16())

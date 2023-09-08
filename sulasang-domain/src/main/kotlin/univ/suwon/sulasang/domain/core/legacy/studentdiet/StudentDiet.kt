@@ -1,4 +1,4 @@
-package univ.suwon.sulasang.domain.core.studentdiet
+package univ.suwon.sulasang.domain.core.legacy.studentdiet
 
 import jakarta.persistence.*
 import univ.suwon.sulasang.domain.BaseEntity

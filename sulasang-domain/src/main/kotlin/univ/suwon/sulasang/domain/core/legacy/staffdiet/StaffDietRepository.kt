@@ -1,4 +1,4 @@
-package univ.suwon.sulasang.domain.core.staffdiet
+package univ.suwon.sulasang.domain.core.legacy.staffdiet
 
 import org.springframework.data.jpa.repository.JpaRepository
 

@@ -1,6 +1,6 @@
-package univ.suwon.sulasang.domain.student.v2.dto
+package univ.suwon.sulasang.domain.legacy.student.v2.dto
 
-import univ.suwon.sulasang.domain.core.studentdiet.StudentDiet
+import univ.suwon.sulasang.domain.core.legacy.studentdiet.StudentDiet
 
 data class StudentDietRetrieveResponseV2(
     val link: String = "https://www.suwon.ac.kr/index.html?menuno=762#",

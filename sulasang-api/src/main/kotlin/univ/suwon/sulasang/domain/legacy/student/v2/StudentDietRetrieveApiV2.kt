@@ -1,12 +1,12 @@
-package univ.suwon.sulasang.domain.student.v2
+package univ.suwon.sulasang.domain.legacy.student.v2
 
 import univ.suwon.sulasang.common.common.response.ResponseForm
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import univ.suwon.sulasang.domain.core.studentdiet.service.StudentDietRetrieve
-import univ.suwon.sulasang.domain.student.v2.dto.StudentDietRetrieveResponseV2
+import univ.suwon.sulasang.domain.core.legacy.studentdiet.service.StudentDietRetrieve
+import univ.suwon.sulasang.domain.legacy.student.v2.dto.StudentDietRetrieveResponseV2
 
 @RestController
 @RequestMapping("/v2/student-diet")
