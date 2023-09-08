@@ -3,7 +3,7 @@ package univ.suwon.sulasang.domain.core.studentdiet
 import jakarta.persistence.*
 import univ.suwon.sulasang.domain.BaseEntity
 import univ.suwon.sulasang.domain.embbeded.Company
-import univ.suwon.sulasang.domain.enumerated.Type
+import univ.suwon.sulasang.domain.enumerated.MealType
 import java.time.LocalDate
 
 @Entity
@@ -11,13 +11,13 @@ import java.time.LocalDate
 class StudentDiet(
 
     @Enumerated(EnumType.STRING)
-    val type: Type?,
+    val mealType: MealType?,
 
     @Embedded
     val company: Company?,
 
     @Column
-    val mondayMenu: String? = "",
+    val mondayMenu: String = "",
 
     @Column
     val tuesdayMenu: String? = "",

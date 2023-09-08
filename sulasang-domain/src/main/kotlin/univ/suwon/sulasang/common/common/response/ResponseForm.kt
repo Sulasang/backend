@@ -1,7 +1,7 @@
-package com.mashup.shorts.common.response
+package univ.suwon.sulasang.common.common.response
 
-import org.springframework.http.HttpStatus
 import com.fasterxml.jackson.annotation.JsonInclude
+import org.springframework.http.HttpStatus
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class ResponseForm<T>(

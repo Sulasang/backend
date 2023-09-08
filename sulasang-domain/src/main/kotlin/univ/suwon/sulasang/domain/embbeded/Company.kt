@@ -6,8 +6,6 @@ import jakarta.persistence.Embeddable
 @Embeddable
 class Company(
 
-    @Column(name = "company_name", nullable = false)
-    val companyName: String
-) {
-
-}
+    @Column(name = "company_name", nullable = true)
+    val companyName: String?
+)

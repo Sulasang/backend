@@ -9,5 +9,5 @@ dependencies {
 }
 
 application {
-    mainClass.set("univ.suwon.sulasang.SuLaSangCrawlerApplication")
+    mainClass.set("univ.suwon.sulasang.SuLaSangCrawlerApplicationKt")
 }

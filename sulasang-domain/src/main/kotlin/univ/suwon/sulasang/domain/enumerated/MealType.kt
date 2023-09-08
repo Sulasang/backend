@@ -3,13 +3,13 @@ package univ.suwon.sulasang.domain.enumerated
 import univ.suwon.sulasang.common.common.exception.SuLaSangBaseException
 import univ.suwon.sulasang.common.common.exception.SuLaSangErrorCode
 
-enum class Type(
+enum class MealType(
     val info: String?
 ) {
     MORNING("조식"), LUNCH("중식"), DINNER("석식");
 
     companion object {
-        fun convertByString(value: String): Type {
+        fun convertByString(value: String): MealType {
             return when (value) {
                 "조식" -> MORNING
                 "중식" -> LUNCH

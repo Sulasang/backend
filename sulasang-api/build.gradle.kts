@@ -40,5 +40,5 @@ dependencies {
 }
 
 application {
-    mainClass.set("univ.suwon.sulasang.SuLaSangApiApplication")
+    mainClass.set("univ.suwon.sulasang.SuLaSangApiApplicationKt")
 }

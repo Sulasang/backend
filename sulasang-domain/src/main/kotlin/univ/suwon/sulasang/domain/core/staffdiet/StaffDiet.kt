@@ -2,14 +2,14 @@ package univ.suwon.sulasang.domain.core.staffdiet
 
 import jakarta.persistence.*
 import univ.suwon.sulasang.domain.BaseEntity
-import univ.suwon.sulasang.domain.enumerated.Type
+import univ.suwon.sulasang.domain.enumerated.MealType
 import java.time.LocalDate
 
 @Entity
 @Table(name = "staff_diet")
 class StaffDiet(
     @Enumerated(EnumType.STRING)
-    val type: Type?,
+    val mealType: MealType?,
 
     @Column
     val mondayMenu: String? = "",

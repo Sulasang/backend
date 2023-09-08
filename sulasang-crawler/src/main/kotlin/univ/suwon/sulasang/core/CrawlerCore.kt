@@ -4,59 +4,401 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
+import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 import univ.suwon.sulasang.common.common.util.StartEndDateConverter
-import univ.suwon.sulasang.domain.core.staffdiet.StaffDiet
-import univ.suwon.sulasang.domain.core.staffdiet.StaffDietRepository
-import univ.suwon.sulasang.domain.core.studentdiet.StudentDiet
+import univ.suwon.sulasang.domain.core.diet.Diet
+import univ.suwon.sulasang.domain.core.diet.DietRepository
 import univ.suwon.sulasang.domain.embbeded.Company
-import univ.suwon.sulasang.domain.enumerated.Type.Companion.convertByString
+import univ.suwon.sulasang.domain.enumerated.MealType
+import univ.suwon.sulasang.domain.enumerated.RestaurantType
+import java.time.DayOfWeek
 import java.time.LocalDate
 
 @Component
 class CrawlerCore(
-    private val studentDietRepository: univ.suwon.sulasang.domain.core.studentdiet.StudentDietRepository,
-    private val staffDietRepository: StaffDietRepository,
+    private val dietRepository: DietRepository,
 ) {
 
+    @Transactional
+    @Scheduled(cron = "0 0 9 * * MON")
     fun execute() {
         val doc = Jsoup.connect(URL).get()
         val mergedLocalDate = extractLocalDate(doc)
+
         val studentTable = extractStudentDietTable(doc)
-        val staffTable = extractStaffDietTable(doc)
         val studentDietData = extractStudentDietData(studentTable)
+        saveStudentDiet(mergedLocalDate, studentDietData)
+
+        val staffTable = extractStaffDietTable(doc)
         val staffDietData = extractStaffDietData(staffTable)
+        saveStaffDiet(mergedLocalDate, staffDietData)
+    }
 
+    private fun saveStudentDiet(
+        mergedLocalDate: Pair<LocalDate, LocalDate>,
+        studentDietData: MutableList<MutableMap<String, String>>
+    ) {
         for (studentDietDatum in studentDietData) {
-            studentDietRepository.save(
-                StudentDiet(
-                    type = convertByString(studentDietDatum[TYPE]!!),
-                    company = Company(studentDietDatum[COMPANY]!!),
-                    mondayMenu = studentDietDatum[MONDAY],
-                    tuesdayMenu = studentDietDatum[TUESDAY],
-                    wednesdayMenu = studentDietDatum[WEDNESDAY],
-                    thursdayMenu = studentDietDatum[THURSDAY],
-                    fridayMenu = studentDietDatum[FRIDAY],
-                    startDate = mergedLocalDate.first,
-                    endDate = mergedLocalDate.second
-                )
-            )
-        }
+            val mondayDate = mergedLocalDate.first
 
-        for (staffDietDatum in staffDietData) {
-            staffDietRepository.save(
-                StaffDiet(
-                    type = convertByString(staffDietDatum[TYPE]!!),
-                    mondayMenu = staffDietDatum[MONDAY],
-                    tuesdayMenu = staffDietDatum[TUESDAY],
-                    wednesdayMenu = staffDietDatum[WEDNESDAY],
-                    thursdayMenu = staffDietDatum[THURSDAY],
-                    fridayMenu = staffDietDatum[FRIDAY],
-                    startDate = mergedLocalDate.first,
-                    endDate = mergedLocalDate.second
+            if (studentDietDatum[COMPANY] == "Chef Table") {
+                if (studentDietDatum[MONDAY] != null) {
+                    println("셰프 테이블 월요일 삽입")
+                    insertStudentDietNotContainingCommonMenu(
+                        studentDietDatum,
+                        mondayDate,
+                        MONDAY,
+                        studentDietDatum[MONDAY]!!
+                    )
+                }
+
+                if (studentDietDatum[TUESDAY] != null) {
+                    println("셰프 테이블 화요일 삽입")
+                    insertStudentDietNotContainingCommonMenu(
+                        studentDietDatum,
+                        mondayDate,
+                        TUESDAY,
+                        studentDietDatum[TUESDAY]!!
+                    )
+                }
+                if (studentDietDatum[WEDNESDAY] != null) {
+                    insertStudentDietNotContainingCommonMenu(
+                        studentDietDatum,
+                        mondayDate,
+                        WEDNESDAY,
+                        studentDietDatum[WEDNESDAY]!!
+                    )
+                }
+
+                if (studentDietDatum[THURSDAY] != null) {
+                    insertStudentDietNotContainingCommonMenu(
+                        studentDietDatum,
+                        mondayDate,
+                        THURSDAY,
+                        studentDietDatum[THURSDAY]!!
+                    )
+                }
+
+                if (studentDietDatum[FRIDAY] != null) {
+                    insertStudentDietNotContainingCommonMenu(
+                        studentDietDatum,
+                        mondayDate,
+                        FRIDAY,
+                        studentDietDatum[FRIDAY]!!
+                    )
+                }
+            } else {
+                if (studentDietDatum[MONDAY] != null) {
+                    insertStudentDietContainingCommonMenu(
+                        studentDietDatum,
+                        mondayDate,
+                        MONDAY,
+                        splitMainMenuAndCommonMenu(studentDietDatum[MONDAY]!!).first,
+                        splitMainMenuAndCommonMenu(studentDietDatum[MONDAY]!!).second
+                    )
+                }
+
+                if (studentDietDatum[TUESDAY] != null) {
+                    insertStudentDietContainingCommonMenu(
+                        studentDietDatum,
+                        mondayDate,
+                        TUESDAY,
+                        splitMainMenuAndCommonMenu(studentDietDatum[TUESDAY]!!).first,
+                        splitMainMenuAndCommonMenu(studentDietDatum[TUESDAY]!!).second
+                    )
+                }
+
+                if (studentDietDatum[WEDNESDAY] != null) {
+                    insertStudentDietContainingCommonMenu(
+                        studentDietDatum,
+                        mondayDate,
+                        WEDNESDAY,
+                        splitMainMenuAndCommonMenu(studentDietDatum[WEDNESDAY]!!).first,
+                        splitMainMenuAndCommonMenu(studentDietDatum[WEDNESDAY]!!).second
+                    )
+                }
+
+                if (studentDietDatum[THURSDAY] != null) {
+                    insertStudentDietContainingCommonMenu(
+                        studentDietDatum,
+                        mondayDate,
+                        THURSDAY,
+                        splitMainMenuAndCommonMenu(studentDietDatum[THURSDAY]!!).first,
+                        splitMainMenuAndCommonMenu(studentDietDatum[THURSDAY]!!).second
+                    )
+                }
+
+                if (studentDietDatum[FRIDAY] != null) {
+                    insertStudentDietContainingCommonMenu(
+                        studentDietDatum,
+                        mondayDate,
+                        THURSDAY,
+                        splitMainMenuAndCommonMenu(studentDietDatum[THURSDAY]!!).first,
+                        splitMainMenuAndCommonMenu(studentDietDatum[THURSDAY]!!).second
+                    )
+                }
+            }
+        }
+    }
+
+    private fun insertStudentDietNotContainingCommonMenu(
+        studentDietDatum: MutableMap<String, String>,
+        mondayDate: LocalDate,
+        dayConst: String,
+        mainMenu: String,
+    ) {
+
+        when (dayConst) {
+            MONDAY -> dietRepository.save(
+                Diet(
+                    dayOfWeek = DayOfWeek.MONDAY,
+                    day = mondayDate,
+                    mainMenu = mainMenu,
+                    commonMenu = null,
+                    mealType = MealType.convertByString(studentDietDatum[TYPE]!!),
+                    restaurantType = RestaurantType.STUDENT,
+                    company = Company(studentDietDatum[COMPANY]!!)
+                )
+            )
+
+            TUESDAY -> dietRepository.save(
+                Diet(
+                    dayOfWeek = DayOfWeek.TUESDAY,
+                    day = mondayDate.plusDays(1),
+                    mainMenu = mainMenu,
+                    commonMenu = null,
+                    mealType = MealType.convertByString(studentDietDatum[TYPE]!!),
+                    restaurantType = RestaurantType.STUDENT,
+                    company = Company(studentDietDatum[COMPANY]!!)
+                )
+            )
+
+            WEDNESDAY -> dietRepository.save(
+                Diet(
+                    dayOfWeek = DayOfWeek.WEDNESDAY,
+                    day = mondayDate.plusDays(2),
+                    mainMenu = mainMenu,
+                    commonMenu = null,
+                    mealType = MealType.convertByString(studentDietDatum[TYPE]!!),
+                    restaurantType = RestaurantType.STUDENT,
+                    company = Company(studentDietDatum[COMPANY]!!)
+                )
+            )
+
+            THURSDAY -> dietRepository.save(
+                Diet(
+                    dayOfWeek = DayOfWeek.THURSDAY,
+                    day = mondayDate.plusDays(3),
+                    mainMenu = mainMenu,
+                    commonMenu = null,
+                    mealType = MealType.convertByString(studentDietDatum[TYPE]!!),
+                    restaurantType = RestaurantType.STUDENT,
+                    company = Company(studentDietDatum[COMPANY]!!)
+                )
+            )
+
+            FRIDAY -> dietRepository.save(
+                Diet(
+                    dayOfWeek = DayOfWeek.FRIDAY,
+                    day = mondayDate.plusDays(4),
+                    mainMenu = mainMenu,
+                    commonMenu = null,
+                    mealType = MealType.convertByString(studentDietDatum[TYPE]!!),
+                    restaurantType = RestaurantType.STUDENT,
+                    company = Company(studentDietDatum[COMPANY]!!)
                 )
             )
         }
+    }
+
+    private fun insertStudentDietContainingCommonMenu(
+        studentDietDatum: MutableMap<String, String>,
+        mondayDate: LocalDate,
+        dayConst: String,
+        mainMenu: String,
+        commonMenu: String,
+    ) {
+
+        when (dayConst) {
+            MONDAY -> dietRepository.save(
+                Diet(
+                    dayOfWeek = DayOfWeek.MONDAY,
+                    day = mondayDate,
+                    mainMenu = mainMenu,
+                    commonMenu = commonMenu,
+                    mealType = MealType.convertByString(studentDietDatum[TYPE]!!),
+                    restaurantType = RestaurantType.STUDENT,
+                    company = Company(studentDietDatum[COMPANY]!!)
+                )
+            )
+
+            TUESDAY -> dietRepository.save(
+                Diet(
+                    dayOfWeek = DayOfWeek.TUESDAY,
+                    day = mondayDate.plusDays(1),
+                    mainMenu = mainMenu,
+                    commonMenu = commonMenu,
+                    mealType = MealType.convertByString(studentDietDatum[TYPE]!!),
+                    restaurantType = RestaurantType.STUDENT,
+                    company = Company(studentDietDatum[COMPANY]!!)
+                )
+            )
+
+            WEDNESDAY -> dietRepository.save(
+                Diet(
+                    dayOfWeek = DayOfWeek.WEDNESDAY,
+                    day = mondayDate.plusDays(2),
+                    mainMenu = mainMenu,
+                    commonMenu = commonMenu,
+                    mealType = MealType.convertByString(studentDietDatum[TYPE]!!),
+                    restaurantType = RestaurantType.STUDENT,
+                    company = Company(studentDietDatum[COMPANY]!!)
+                )
+            )
+
+            THURSDAY -> dietRepository.save(
+                Diet(
+                    dayOfWeek = DayOfWeek.THURSDAY,
+                    day = mondayDate.plusDays(3),
+                    mainMenu = mainMenu,
+                    commonMenu = commonMenu,
+                    mealType = MealType.convertByString(studentDietDatum[TYPE]!!),
+                    restaurantType = RestaurantType.STUDENT,
+                    company = Company(studentDietDatum[COMPANY]!!)
+                )
+            )
+
+            FRIDAY -> dietRepository.save(
+                Diet(
+                    dayOfWeek = DayOfWeek.FRIDAY,
+                    day = mondayDate.plusDays(4),
+                    mainMenu = mainMenu,
+                    commonMenu = commonMenu,
+                    mealType = MealType.convertByString(studentDietDatum[TYPE]!!),
+                    restaurantType = RestaurantType.STUDENT,
+                    company = Company(studentDietDatum[COMPANY]!!)
+                )
+            )
+        }
+    }
+
+    private fun insertStaffDiet(
+        staffDietDatum: MutableMap<String, String>,
+        mondayDate: LocalDate,
+        dayConst: String,
+    ) {
+
+        when (dayConst) {
+            MONDAY -> dietRepository.save(
+                Diet(
+                    dayOfWeek = DayOfWeek.MONDAY,
+                    day = mondayDate,
+                    mainMenu = staffDietDatum[MONDAY]!!,
+                    commonMenu = null,
+                    mealType = MealType.convertByString(staffDietDatum[TYPE]!!),
+                    restaurantType = RestaurantType.STAFF,
+                    company = null
+                )
+            )
+
+            TUESDAY -> dietRepository.save(
+                Diet(
+                    dayOfWeek = DayOfWeek.TUESDAY,
+                    day = mondayDate.plusDays(1),
+                    mainMenu = staffDietDatum[TUESDAY]!!,
+                    commonMenu = null,
+                    mealType = MealType.convertByString(staffDietDatum[TYPE]!!),
+                    restaurantType = RestaurantType.STAFF,
+                    company = null
+                )
+            )
+
+            WEDNESDAY -> dietRepository.save(
+                Diet(
+                    dayOfWeek = DayOfWeek.WEDNESDAY,
+                    day = mondayDate.plusDays(2),
+                    mainMenu = staffDietDatum[WEDNESDAY]!!,
+                    commonMenu = null,
+                    mealType = MealType.convertByString(staffDietDatum[TYPE]!!),
+                    restaurantType = RestaurantType.STAFF,
+                    company = null
+                )
+            )
+
+            THURSDAY -> dietRepository.save(
+                Diet(
+                    dayOfWeek = DayOfWeek.THURSDAY,
+                    day = mondayDate.plusDays(3),
+                    mainMenu = staffDietDatum[THURSDAY]!!,
+                    commonMenu = null,
+                    mealType = MealType.convertByString(staffDietDatum[TYPE]!!),
+                    restaurantType = RestaurantType.STAFF,
+                    company = null
+                )
+            )
+
+            FRIDAY -> dietRepository.save(
+                Diet(
+                    dayOfWeek = DayOfWeek.FRIDAY,
+                    day = mondayDate.plusDays(4),
+                    mainMenu = staffDietDatum[FRIDAY]!!,
+                    commonMenu = null,
+                    mealType = MealType.convertByString(staffDietDatum[TYPE]!!),
+                    restaurantType = RestaurantType.STAFF,
+                    company = null
+                )
+            )
+        }
+    }
+
+    private fun saveStaffDiet(
+        mergedLocalDate: Pair<LocalDate, LocalDate>,
+        staffDietData: MutableList<MutableMap<String, String>>
+    ) {
+        for (staffDietDataDatum in staffDietData) {
+            val mondayDate = mergedLocalDate.first
+            if (staffDietDataDatum[MONDAY] != null) {
+                insertStaffDiet(
+                    staffDietDataDatum,
+                    mondayDate,
+                    MONDAY,
+                )
+            } else if (staffDietDataDatum[TUESDAY] != null) {
+                insertStaffDiet(
+                    staffDietDataDatum,
+                    mondayDate,
+                    TUESDAY,
+                )
+            } else if (staffDietDataDatum[WEDNESDAY] != null) {
+                insertStaffDiet(
+                    staffDietDataDatum,
+                    mondayDate,
+                    WEDNESDAY,
+                )
+            } else if (staffDietDataDatum[THURSDAY] != null) {
+                insertStaffDiet(
+                    staffDietDataDatum,
+                    mondayDate,
+                    THURSDAY,
+                )
+            } else if (staffDietDataDatum[FRIDAY] != null) {
+                insertStaffDiet(
+                    staffDietDataDatum,
+                    mondayDate,
+                    FRIDAY,
+                )
+            }
+        }
+    }
+
+    private fun splitMainMenuAndCommonMenu(menu: String): Pair<String, String> {
+        val temp = menu.split(" (공통메뉴) ")
+        val mainMenu = temp[0]
+        val commonMenu = temp[1]
+
+        return Pair(mainMenu, commonMenu)
     }
 
     private fun extractLocalDate(doc: Document): Pair<LocalDate, LocalDate> {
