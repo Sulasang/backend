@@ -1,10 +1,7 @@
 package univ.suwon.sulasang.domain.diet
 
 import org.springframework.http.HttpStatus
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import univ.suwon.sulasang.common.common.response.ResponseForm
 import univ.suwon.sulasang.common.common.response.ResponseForm.Companion.success
 import univ.suwon.sulasang.domain.core.diet.service.DietRetrieve
@@ -15,6 +12,7 @@ import java.time.LocalDate
 
 @RestController
 @RequestMapping("/v1/diet")
+@CrossOrigin(origins = ["*"], allowedHeaders = ["*"])
 class DietRetrieveApi(
     private val dietRetrieve: DietRetrieve,
 ) {
