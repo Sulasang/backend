@@ -41,12 +41,12 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
-
-      - name: Docker 이미지 빌드
-        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }}:latest -f docker/Dockerfile .
-
-      - name: Docker Hub 푸쉬
-        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }}
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          tags: user/app:latest
 
       - name: EC2 인스턴스 접속 및 애플리케이션 실행
         uses: appleboy/ssh-action@v0.1.6
