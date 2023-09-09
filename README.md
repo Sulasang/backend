@@ -7,6 +7,6 @@
 # To-Do-List
 
 - [x] Jasypt
-- [ ] Rest Docs
+- [x] Rest Docs
 - [ ] CI/CD
 - [ ] Push Alarm
