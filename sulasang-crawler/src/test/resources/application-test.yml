@@ -6,13 +6,13 @@ spring:
 #    url: jdbc:mysql://localhost:3306/sulasang
 #    username: root
 #    password: 112233
-    url: jdbc:mysql://sulasang.c0i2kuojdimp.ap-northeast-2.rds.amazonaws.com:3306/sulasang
-    username: admin
-    password: Qordpsemaktmxj1!
+    url: ENC(7vlUm9oaodpkoKG511jPx/5GXniLMrAIpBWfRujVNpM0KAlYLwLMeDp9j5J++UN8qMpFH39i5iLa9FZ87n30p3TM63hw7hGNb0hu3R7btm1+DZVwv7rlaCfHW/Vj1YFEnFYrwIz/D2dy225FpXAMhZUYiqVxFmSRg7b0oi3Rpsg=)
+    username: ENC(JrpqIOrrqroawYs7s8Ovq3WFH8kN2TtpMNSS2CStsQiy60zNYhgb1zGjEj5fvia6)
+    password: ENC(bRALLQ3KC8a4Z4IOpuBVxckmDH3cr5H8+xKO5npDZfYS7BFnJO2r9F/z/y9GcAiXuyznFnzrE0rESNd4cSD8Hw==)
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: validate
     database: mysql
     properties:
       hibernate:

@@ -14,10 +14,10 @@ class DietRetrieve(
 ) {
 
     fun executeForWeeklyDiet() : List<Diet> {
-        return dietRepository.findTop20ByOrderByDay()
+        return dietRepository.findDistinctTop20ByOrderByDay()
     }
 
     fun executeByDateAndType(date: LocalDate, type: MealType) : List<Diet> {
-        return dietRepository.findAllByDayAndMealType(date, type)
+        return dietRepository.findDistinctAllByDayAndMealType(date, type)
     }
 }

@@ -5,6 +5,6 @@ import univ.suwon.sulasang.domain.enumerated.MealType
 import java.time.LocalDate
 
 interface DietRepository : JpaRepository<Diet, Long> {
-    fun findTop20ByOrderByDay(): List<Diet>
-    fun findAllByDayAndMealType(date: LocalDate, type: MealType): List<Diet>
+    fun findDistinctTop20ByOrderByDay(): List<Diet>
+    fun findDistinctAllByDayAndMealType(date: LocalDate, type: MealType): List<Diet>
 }
