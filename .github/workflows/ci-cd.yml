@@ -16,13 +16,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Gradle Caching
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-
       - name: QEMU 설치
         uses: docker/setup-qemu-action@v2
 
@@ -33,7 +26,6 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: 17
-          distribution: adopt
 
       - name: 빌드 권한 부여
         run: chmod +x ./gradlew
@@ -50,7 +42,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
       - name: Docker 이미지 빌드
-        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }}
+        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }}:latest -f docker/Dockerfile .
 
       - name: Docker Hub 푸쉬
         run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }}
