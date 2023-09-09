@@ -57,7 +57,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: user/app:latest
+          tags: sulasang/app:latest
 
       - name: EC2 인스턴스 접속 및 애플리케이션 실행
         uses: appleboy/ssh-action@v0.1.6
