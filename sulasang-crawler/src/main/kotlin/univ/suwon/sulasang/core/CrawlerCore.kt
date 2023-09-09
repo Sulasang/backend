@@ -17,7 +17,7 @@ class CrawlerCore(
     }
 
     @Scheduled(cron = "0 0 9 * * MON")
-    fun executeAmaraenseu() {
+    fun executeAmaraense() {
         amaraenseCrawler.execute()
     }
 }
