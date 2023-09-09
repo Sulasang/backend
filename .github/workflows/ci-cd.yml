@@ -1,7 +1,6 @@
 name: Sulasang CI/CD with Gradle, Github Actions, Docker
 
 on:
-  # main 브랜치에 push나 pull request 발생 시
   push:
     branches: [ "main" ]
   pull_request:
@@ -10,7 +9,6 @@ on:
 env:
   JASYPT_ENCRYPTOR_PASSWORD: ${{ secrets.JASYPT_ENCRYPTOR_PASSWORD }}
 
-# 위 이벤트 발생 시 실행될 작업들
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -32,7 +30,7 @@ jobs:
         shell: bash
 
       - name: DockerHub 로그인
-        uses: docker/login-action@v3
+        uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
