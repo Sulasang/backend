@@ -1,0 +1,20 @@
+= 수라상 API
+gifticon-storm
+:toc: left
+:toclevels: 3
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:sectlinks:
+:hardbreaks:
+
+[[introduction]]
+
+[[Option]]
+== link:../index.html[> 이전으로]
+
+== 공통
+include::./src/docs/asciidoc/common/api-common-docs.adoc[]
+
+== 식단 조회
+include::./src/docs/asciidoc/diet/index.adoc[]

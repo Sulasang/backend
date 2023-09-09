@@ -1,0 +1,50 @@
+ifndef::snippets[]
+:snippets: build/generated-snippets
+endif::[]
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+
+=== 주간 식단 조회
+
+==== [Request URI]
+
+include::../../../../../sulasang-api/{snippets}/주간 식단 조회/page-header.adoc[]
+
+==== [HTTP Request]
+
+include::../../../../../sulasang-api/{snippets}/주간 식단 조회/http-request.adoc[]
+
+==== [Response Field]
+
+include::../../../../../sulasang-api/{snippets}/주간 식단 조회/response-fields.adoc[]
+
+==== [Response HTTP Example]
+
+include::../../../../../sulasang-api/{snippets}/주간 식단 조회/http-response.adoc[]
+
+---
+
+=== 날짜, 식사 타입으로 식단 조회
+
+==== [Request URI]
+
+include::../../../../../sulasang-api/{snippets}/날짜, 식사 타입으로 식단 조회/page-header.adoc[]
+
+==== [Query Parameters]
+
+include::../../../../../sulasang-api/{snippets}/날짜, 식사 타입으로 식단 조회/query-parameters.adoc[]
+
+==== [HTTP Request]
+
+include::../../../../../sulasang-api/{snippets}/날짜, 식사 타입으로 식단 조회/http-request.adoc[]
+
+==== [Response Field]
+
+include::../../../../../sulasang-api/{snippets}/날짜, 식사 타입으로 식단 조회/response-fields.adoc[]
+
+==== [Response HTTP Example]
+
+include::../../../../../sulasang-api/{snippets}/날짜, 식사 타입으로 식단 `조회`/http-response.adoc[]
