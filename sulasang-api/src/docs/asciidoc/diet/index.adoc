@@ -47,4 +47,4 @@ include::../../../../../sulasang-api/{snippets}/날짜, 식사 타입으로 식�
 
 ==== [Response HTTP Example]
 
-include::../../../../../sulasang-api/{snippets}/날짜, 식사 타입으로 식단 `조회`/http-response.adoc[]
+include::../../../../../sulasang-api/{snippets}/날짜, 식사 타입으로 식단 조회/http-response.adoc[]
