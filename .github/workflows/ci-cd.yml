@@ -26,6 +26,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: 17
+          distribution: adopt
 
       - name: 빌드 권한 부여
         run: chmod +x ./gradlew
