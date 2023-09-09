@@ -1,5 +1,6 @@
 package univ.suwon.sulasang.domain.diet
 
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
@@ -20,6 +21,7 @@ class DietRetrieveApi(
     private val dietRetrieve: DietRetrieve,
 ) {
 
+    @Cacheable(cacheNames = ["weekly-diet"])
     @GetMapping("/weekly")
     fun retrieveWeeklyDiet(): ResponseForm<DietRetrieveWeeklyResponse> {
         return success(
@@ -28,6 +30,7 @@ class DietRetrieveApi(
         )
     }
 
+    @Cacheable(cacheNames = ["date-type-diet"])
     @GetMapping
     fun retrieveDateDiet(
         @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) date: Instant,

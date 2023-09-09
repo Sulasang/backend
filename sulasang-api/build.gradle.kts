@@ -30,6 +30,9 @@ tasks.bootJar {
 dependencies {
     api(project(":sulasang-domain"))
 
+    implementation("org.springframework.boot:spring-boot-starter-cache")
+    implementation("com.github.ben-manes.caffeine:caffeine")
+
     // Validation Annotation
     implementation("org.springframework.boot:spring-boot-starter-validation")
 
