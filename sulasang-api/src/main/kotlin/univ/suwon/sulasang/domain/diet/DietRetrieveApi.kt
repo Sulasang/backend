@@ -37,7 +37,7 @@ class DietRetrieveApi(
             httpStatus = HttpStatus.OK,
             result = DietRetrieveDateAndTypeResponse.of(
                 dietRetrieve.executeByDateAndType(
-                    date = ZonedDateTime.ofInstant(date, ZoneId.of("Asia/Seoul")).toLocalDate(),
+                    date = ZonedDateTime.ofInstant(date, ZoneId.of("UTC")).toLocalDate(),
                     type = type
                 )
             )

@@ -17,7 +17,7 @@ java {
 }
 
 application {
-    mainClass.set("com.mashup.shorts.ShortsApiApplication")
+    mainClass.set("univ.suwon.sulasang.SuLaSangApiApplicationKt")
 }
 
 allprojects {
@@ -45,9 +45,6 @@ subprojects {
         implementation("org.springframework.boot:spring-boot-starter-web")
         implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
         implementation("io.github.microutils:kotlin-logging:2.0.8")
-
-        // Jasypt
-        implementation("com.github.ulisesbocchio:jasypt-spring-boot:3.0.4")
 
         implementation("org.jetbrains.kotlin:kotlin-reflect")
         testImplementation("org.springframework.boot:spring-boot-starter-test")

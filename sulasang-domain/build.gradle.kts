@@ -2,11 +2,14 @@ dependencies {
     api("org.springframework.boot:spring-boot-starter-data-jpa")
     runtimeOnly("com.mysql:mysql-connector-j")
 
-    // QueryDSL
-    implementation("com.querydsl:querydsl-jpa:5.0.0:jakarta")
-    kapt("com.querydsl:querydsl-apt:5.0.0:jakarta")
-    kapt("jakarta.annotation:jakarta.annotation-api")
-    kapt("jakarta.persistence:jakarta.persistence-api")
+    // jasypt
+    api("com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.3")
+
+    // querydsl
+    implementation ("com.querydsl:querydsl-jpa:5.0.0:jakarta")
+    kapt ("com.querydsl:querydsl-apt:5.0.0:jakarta")
+    kapt ("jakarta.annotation:jakarta.annotation-api")
+    kapt ("jakarta.persistence:jakarta.persistence-api")
 }
 
 allOpen {
@@ -15,6 +18,10 @@ allOpen {
     annotation("jakarta.persistence.Embeddable")
 }
 
-application {
-    mainClass.set("univ.suwon.sulasang.SuLaSangCrawlerApplication")
+tasks.bootJar {
+    enabled = false
+}
+
+tasks.jar {
+    enabled = true
 }

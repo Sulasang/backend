@@ -132,9 +132,9 @@ class CrawlerCore(
                     insertStudentDietContainingCommonMenu(
                         studentDietDatum,
                         mondayDate,
-                        THURSDAY,
-                        splitMainMenuAndCommonMenu(studentDietDatum[THURSDAY]!!).first,
-                        splitMainMenuAndCommonMenu(studentDietDatum[THURSDAY]!!).second
+                        FRIDAY,
+                        splitMainMenuAndCommonMenu(studentDietDatum[FRIDAY]!!).first,
+                        splitMainMenuAndCommonMenu(studentDietDatum[FRIDAY]!!).second
                     )
                 }
             }

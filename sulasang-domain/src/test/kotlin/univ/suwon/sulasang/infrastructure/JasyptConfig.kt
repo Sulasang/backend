@@ -1,5 +1,6 @@
 package univ.suwon.sulasang.infrastructure
 
+import com.ulisesbocchio.jasyptspringboot.encryptor.DefaultLazyEncryptor
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
@@ -9,11 +10,11 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.core.env.ConfigurableEnvironment
 import org.springframework.test.context.junit.jupiter.SpringExtension
-import com.ulisesbocchio.jasyptspringboot.encryptor.DefaultLazyEncryptor
+import univ.suwon.sulasang.common.common.config.JasyptConfig
 
 @Disabled
 @ExtendWith(SpringExtension::class)
-@SpringBootTest
+@SpringBootTest(classes = [JasyptConfig::class])
 class EncryptionTest {
 
     @Value("\${jasypt.encryptor.password}")
@@ -34,15 +35,15 @@ class EncryptionTest {
 
     @Test
     fun testForEncryption() {
-        val source = "test"
-        println("source: $source")
-        println("encrypted: ${encryptor.encrypt(source)}")
+        val encryptTarget = "test"
+        println("source: $encryptTarget")
+        println("encrypted: ${encryptor.encrypt(encryptTarget)}")
     }
 
     @Test
     fun testForDecryption() {
-        val source = "test"
-        println("source: $source")
-        println("decrypted: ${encryptor.decrypt(source)}")
+        val decryptTarget = "test"
+        println("source: $decryptTarget")
+        println("decrypted: ${encryptor.decrypt(decryptTarget)}")
     }
 }
