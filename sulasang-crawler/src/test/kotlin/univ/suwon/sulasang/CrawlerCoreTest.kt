@@ -16,6 +16,6 @@ class CrawlerCoreTest(
 
     @Test
     fun main() {
-        crawlerCore.execute()
+        crawlerCore.executeAceEducationCenter()
     }
 }
