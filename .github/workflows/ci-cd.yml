@@ -61,34 +61,35 @@ jobs:
           key: ${{ secrets.EC2_KEY }}
 
           script: |
+            sudo su
             echo "EC2 접속 완료"
             
             #!/bin/bash
-            API-PORT=8080
-            CRAWLER-PORT=8081
-            DOCKER-PORT=8083
-            API-PID=$(lsof -t -i :API-$PORT)
-            CRAWLER-PID=$(lsof -t -i :CRAWLER-PORT)
-            DOCKER-PID=$(lsof -t -i :$DOCKER-PORT)
+            API_PORT=8080
+            CRAWLER_PORT=8081
+            DOCKER_PORT=8083
+            API_PID=$(lsof -t -i :API-$PORT)
+            CRAWLER_PID=$(lsof -t -i :CRAWLER-PORT)
+            DOCKER_PID=$(lsof -t -i :$DOCKER-PORT)
             
             if [ -z "$API-PID" ]; then
-              echo "포트 $API-PORT를 사용하는 프로세스가 실행 중이지 않습니다."
+              echo "포트 $API_PORT를 사용하는 프로세스가 실행 중이지 않습니다."
             else
-              echo "포트 $API-PORT를 사용하는 프로세스 (PID: $PID)를 종료합니다."
+              echo "포트 $API_PORT를 사용하는 프로세스 (PID: $PID)를 종료합니다."
               kill $PID
             fi
             
-            if [ -z "$CRAWLER-PID" ]; then
-              echo "포트 $CRAWLER-PORT를 사용하는 프로세스가 실행 중이지 않습니다."
+            if [ -z "$CRAWLER_PID" ]; then
+              echo "포트 $CRAWLER_PORT를 사용하는 프로세스가 실행 중이지 않습니다."
             else
-              echo "포트 $CRAWLER-PORT를 사용하는 프로세스 (PID: $PID)를 종료합니다."
+              echo "포트 $CRAWLER_PORT를 사용하는 프로세스 (PID: $PID)를 종료합니다."
               kill $PID
             fi
             
-            if [ -z "$DOCKER-PID" ]; then
-              echo "포트 $DOCKER-PORT를 사용하는 프로세스가 실행 중이지 않습니다."
+            if [ -z "$DOCKER_PID" ]; then
+              echo "포트 $DOCKER_PORT를 사용하는 프로세스가 실행 중이지 않습니다."
             else
-              echo "포트 $DOCKER-PORT를 사용하는 프로세스 (PID: $PID)를 종료합니다."
+              echo "포트 $DOCKER_PORT를 사용하는 프로세스 (PID: $PID)를 종료합니다."
               kill $PID
             fi
             
