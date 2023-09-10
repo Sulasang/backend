@@ -68,9 +68,9 @@ jobs:
             API_PORT=8080
             CRAWLER_PORT=8081
             DOCKER_PORT=8083
-            API_PID=$(lsof -t -i :API-$PORT)
-            CRAWLER_PID=$(lsof -t -i :CRAWLER-PORT)
-            DOCKER_PID=$(lsof -t -i :$DOCKER-PORT)
+            API_PID=$(lsof -t -i :$API_PORT)
+            CRAWLER_PID=$(lsof -t -i :$CRAWLER_PORT)
+            DOCKER_PID=$(lsof -t -i :$DOCKER_PORT)
             
             if [ -z "$API_PID" ]; then
               echo "포트 $API_PORT를 사용하는 프로세스가 실행 중이지 않습니다."
