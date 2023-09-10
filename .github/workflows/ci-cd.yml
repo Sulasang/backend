@@ -93,8 +93,9 @@ jobs:
               kill $DOCKER_PID
             fi
             
-            sudo docker rmi ${{ secrets.DOCKERHUB_USERNAME }}/sulasang
-            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/sulasang
+            docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password ${{ secrets.DOCKERHUB_PASSWORD }} 
+            docker rmi ${{ secrets.DOCKERHUB_USERNAME }}/sulasang
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/sulasang
 
             sudo docker run -p ${{ secrets.PORT }}:${{ secrets.PORT }} \
             --name ${{ secrets.PROJECT_NAME }} \
