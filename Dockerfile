@@ -8,7 +8,7 @@ WORKDIR /app
 COPY build/libs/*.jar app.jar
 
 # Expose port 8080
-EXPOSE 8080
+EXPOSE 8083
 
 # Command to run the application
 CMD ["java", "-jar", "app.jar"]
