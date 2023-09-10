@@ -8,6 +8,7 @@ on:
 
 env:
   JASYPT_ENCRYPTOR_PASSWORD: ${{ secrets.JASYPT_ENCRYPTOR_PASSWORD }}
+  GIT_HASH: ${GITHUB_SHA::7}
 
 jobs:
   build:
@@ -62,50 +63,4 @@ jobs:
             sudo su
             echo "EC2 접속 완료"
             
-            #!/bin/bash
-            API_PORT=8080
-            CRAWLER_PORT=8081
-            DOCKER_PORT=8083
-            API_PID=$(lsof -t -i :$API_PORT)
-            CRAWLER_PID=$(lsof -t -i :$CRAWLER_PORT)
-            DOCKER_PID=$(lsof -t -i :$DOCKER_PORT)
-            
-            if [ -z "$API_PID" ]; then
-              echo "포트 $API_PORT를 사용하는 프로세스가 실행 중이지 않습니다."
-            else
-              echo "포트 $API_PORT를 사용하는 프로세스 (PID: $API_PID)를 종료합니다."
-              kill $API_PID
-            fi
-            
-            if [ -z "$CRAWLER_PID" ]; then
-              echo "포트 $CRAWLER_PORT를 사용하는 프로세스가 실행 중이지 않습니다."
-            else
-              echo "포트 $CRAWLER_PORT를 사용하는 프로세스 (PID: $CRAWLER_PID)를 종료합니다."
-              kill $CRAWLER_PID
-            fi
-            
-            if [ -z "$DOCKER_PID" ]; then
-              echo "포트 $DOCKER_PORT를 사용하는 프로세스가 실행 중이지 않습니다."
-            else
-              echo "포트 $DOCKER_PORT를 사용하는 프로세스 (PID: $DOCKER_PID)를 종료합니다."
-              kill $DOCKER_PID
-            fi
-                        
-            docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin ${{ secrets.DOCKERHUB_PASSWORD }}
-            
-            echo "도커 ${{ secrets.DOCKERHUB_USERNAME }} 로그인 성공"
-            
-            docker rmi $(docker images -q)
-            
-            echo "도커 모든 이미지 제거"
-            
-            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }}:${GITHUB_SHA::7}
-            
-            echo "${GITHUB_SHA::7} 이미지 풀링"
-            
-            sudo docker run -p ${{ secrets.PORT }}:${{ secrets.PORT }} \
-            --name ${{ secrets.PROJECT_NAME }} \
-            -e SPRING_DATASOURCE_URL=${{ secrets.DB_URL }} \
-            -e SPRING_DATASOURCE_USERNAME=${{ secrets.DB_USERNAME }} \
-            -e SPRING_DATASOURCE_PASSWORD=${{ secrets.DB_PASSWORD }} \
-            -d ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }}
+            ./script.sh
