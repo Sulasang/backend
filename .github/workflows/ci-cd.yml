@@ -96,8 +96,8 @@ jobs:
             exit
             
             docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin ${{ secrets.DOCKERHUB_PASSWORD }}
-            docker rmi ${{ secrets.DOCKERHUB_USERNAME }}/sulasang
-            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/sulasang
+            docker rmi $(docker images -q)
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/sulasang:${GITHUB_SHA::7}
 
             sudo docker run -p ${{ secrets.PORT }}:${{ secrets.PORT }} \
             --name ${{ secrets.PROJECT_NAME }} \
