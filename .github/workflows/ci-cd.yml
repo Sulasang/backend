@@ -86,16 +86,7 @@ jobs:
               kill $CRAWLER_PID
             fi
             
-            if [ -z "$DOCKER_PID" ]; then
-              echo "포트 $DOCKER_PORT를 사용하는 프로세스가 실행 중이지 않습니다."
-            else
-              echo "포트 $DOCKER_PORT를 사용하는 프로세스 (PID: $DOCKER_PID)를 종료합니다."
-              kill $DOCKER_PID
-            fi
-            
-            exit
-            
-            docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
+            docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin ${{ secrets.DOCKERHUB_PASSWORD }}
             docker rmi ${{ secrets.DOCKERHUB_USERNAME }}/sulasang
             docker pull ${{ secrets.DOCKERHUB_USERNAME }}/sulasang
 
