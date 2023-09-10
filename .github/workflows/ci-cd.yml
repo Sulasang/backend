@@ -93,7 +93,7 @@ jobs:
               kill $DOCKER_PID
             fi
             
-            docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password ${{ secrets.DOCKERHUB_PASSWORD }} 
+            docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
             docker rmi ${{ secrets.DOCKERHUB_USERNAME }}/sulasang
             docker pull ${{ secrets.DOCKERHUB_USERNAME }}/sulasang
 
