@@ -1,14 +1,7 @@
-# Base image
-FROM openjdk:17-jdk-slim
-
-# Set the working directory in the container
-WORKDIR /app
-
-# Copy the JAR file into the container at /app
-COPY build/libs/*.jar app.jar
-
-# Expose port 8080
+FROM openjdk:17-jdk
+WORKDIR /home/ubuntu/
+COPY sulasang-api/build/libs/*.jar buzzing-server.jar
+COPY sulasang-crawler/build/libs/*.jar buzzing-server.jar
 EXPOSE 8083
-
-# Command to run the application
-CMD ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java","-jar","-Dspring.profiles.active=prod","sulasang-api-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java","-jar","-Dspring.profiles.active=prod","sulasang-crawler-0.0.1-SNAPSHOT.jar"]
