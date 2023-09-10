@@ -76,25 +76,25 @@ jobs:
               echo "포트 $API_PORT를 사용하는 프로세스가 실행 중이지 않습니다."
             else
               echo "포트 $API_PORT를 사용하는 프로세스 (PID: $API_PID)를 종료합니다."
-              kill $PID
+              kill $API_PID
             fi
             
             if [ -z "$CRAWLER_PID" ]; then
               echo "포트 ${CRAWLER_PORT}를 사용하는 프로세스가 실행 중이지 않습니다."
             else
               echo "포트 ${CRAWLER_PORT}를 사용하는 프로세스 (PID: $CRAWLER_PID)를 종료합니다."
-              kill $PID
+              kill $CRAWLER_PID
             fi
             
             if [ -z "$DOCKER_PID" ]; then
               echo "포트 ${DOCKER_PORT}를 사용하는 프로세스가 실행 중이지 않습니다."
             else
               echo "포트 ${DOCKER_PORT}를 사용하는 프로세스 (PID: $DOCKER_PID)를 종료합니다."
-              kill $PID
+              kill $CRAWLER_PID
             fi
             
-            sudo docker rmi ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }}
-            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }}
+            sudo docker rmi ${{ secrets.DOCKERHUB_USERNAME }}/sulasang
+            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/sulasang
 
             sudo docker run -p ${{ secrets.PORT }}:${{ secrets.PORT }} \
             --name ${{ secrets.PROJECT_NAME }} \
