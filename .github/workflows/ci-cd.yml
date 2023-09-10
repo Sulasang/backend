@@ -90,9 +90,7 @@ jobs:
               echo "포트 $DOCKER_PORT를 사용하는 프로세스 (PID: $DOCKER_PID)를 종료합니다."
               kill $DOCKER_PID
             fi
-            
-            exit
-            
+                        
             docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin ${{ secrets.DOCKERHUB_PASSWORD }}
             
             echo "도커 ${{ secrets.DOCKERHUB_USERNAME }} 로그인 성공"
