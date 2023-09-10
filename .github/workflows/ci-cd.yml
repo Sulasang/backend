@@ -62,14 +62,45 @@ jobs:
 
           script: |
             echo "EC2 접속 완료"
+            
+            #!/bin/bash
+            API-PORT=8080
+            CRAWLER-PORT=8081
+            DOCKER-PORT=8083
+            API-PID=$(lsof -t -i :API-$PORT)
+            CRAWLER-PID=$(lsof -t -i :CRAWLER-PORT)
+            DOCKER-PID=$(lsof -t -i :$DOCKER-PORT)
+            
+            if [ -z "$API-PID" ]; then
+              echo "포트 $API-PORT를 사용하는 프로세스가 실행 중이지 않습니다."
+            else
+              echo "포트 $API-PORT를 사용하는 프로세스 (PID: $PID)를 종료합니다."
+              kill $PID
+            fi
+            
+            if [ -z "$CRAWLER-PID" ]; then
+              echo "포트 $CRAWLER-PORT를 사용하는 프로세스가 실행 중이지 않습니다."
+            else
+              echo "포트 $CRAWLER-PORT를 사용하는 프로세스 (PID: $PID)를 종료합니다."
+              kill $PID
+            fi
+            
+            if [ -z "$DOCKER-PID" ]; then
+              echo "포트 $DOCKER-PORT를 사용하는 프로세스가 실행 중이지 않습니다."
+            else
+              echo "포트 $DOCKER-PORT를 사용하는 프로세스 (PID: $PID)를 종료합니다."
+              kill $PID
+            fi
+            
+            sudo docker rmi ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }}
+            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }}
+
+            sudo docker run -p ${{ secrets.PORT }}:${{ secrets.PORT }} \
+            --name ${{ secrets.PROJECT_NAME }} \
+            -e SPRING_DATASOURCE_URL=${{ secrets.DB_URL }} \
+            -e SPRING_DATASOURCE_USERNAME=${{ secrets.DB_USERNAME }} \
+            -e SPRING_DATASOURCE_PASSWORD=${{ secrets.DB_PASSWORD }} \
+            -d ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }}
+
 #            sudo docker kill ${{ secrets.PROJECT_NAME }}
 #            sudo docker rm -f ${{ secrets.PROJECT_NAME }}
-#            sudo docker rmi ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }}
-#            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }}
-#
-#            sudo docker run -p ${{ secrets.PORT }}:${{ secrets.PORT }} \
-#            --name ${{ secrets.PROJECT_NAME }} \
-#            -e SPRING_DATASOURCE_URL=${{ secrets.DB_URL }} \
-#            -e SPRING_DATASOURCE_USERNAME=${{ secrets.DB_USERNAME }} \
-#            -e SPRING_DATASOURCE_PASSWORD=${{ secrets.DB_PASSWORD }} \
-#            -d ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }}
