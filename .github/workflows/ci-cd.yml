@@ -61,10 +61,8 @@ jobs:
           key: ${{ secrets.EC2_KEY }}
 
           script: |
-            sudo su
             echo "EC2 접속 완료"
             
             cd /home/ubuntu
-            chmod 700 script.sh
-            
-            ./script.sh
+            sudo chmod 700 script.sh
+            sudo ./script.sh
