@@ -53,22 +53,22 @@ jobs:
           docker tag ${{ secrets.DOCKERHUB_USERNAME }}/sulasang ${{ secrets.DOCKERHUB_USERNAME }}/sulasang:${GITHUB_SHA::7}
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/sulasang:${GITHUB_SHA::7}
 
-#      - name: EC2 인스턴스 접속 및 애플리케이션 실행
-#        uses: appleboy/ssh-action@v0.1.6
-#        with:
-#          host: ${{ secrets.EC2_HOST }}
-#          username: ${{ secrets.EC2_USERNAME }}
-#          key: ${{ secrets.EC2_KEY }}
-#
-#          script: |
-#            sudo docker kill ${{ secrets.PROJECT_NAME }}
-#            sudo docker rm -f ${{ secrets.PROJECT_NAME }}
-#            sudo docker rmi ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }}
-#            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }}
-#
-#            sudo docker run -p ${{ secrets.PORT }}:${{ secrets.PORT }} \
-#            --name ${{ secrets.PROJECT_NAME }} \
-#            -e SPRING_DATASOURCE_URL=${{ secrets.DB_URL }} \
-#            -e SPRING_DATASOURCE_USERNAME=${{ secrets.DB_USERNAME }} \
-#            -e SPRING_DATASOURCE_PASSWORD=${{ secrets.DB_PASSWORD }} \
-#            -d ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }}
+      - name: EC2 인스턴스 접속 및 애플리케이션 실행
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_KEY }}
+
+          script: |
+            sudo docker kill ${{ secrets.PROJECT_NAME }}
+            sudo docker rm -f ${{ secrets.PROJECT_NAME }}
+            sudo docker rmi ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }}
+            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }}
+
+            sudo docker run -p ${{ secrets.PORT }}:${{ secrets.PORT }} \
+            --name ${{ secrets.PROJECT_NAME }} \
+            -e SPRING_DATASOURCE_URL=${{ secrets.DB_URL }} \
+            -e SPRING_DATASOURCE_USERNAME=${{ secrets.DB_USERNAME }} \
+            -e SPRING_DATASOURCE_PASSWORD=${{ secrets.DB_PASSWORD }} \
+            -d ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }}
