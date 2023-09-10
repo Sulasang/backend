@@ -48,9 +48,9 @@ jobs:
       - name: 이미지 빌드 & DockerHub Push
         run: |
           docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/sulasang .
-          docker tag ${{ secrets.DOCKERHUB_USERNAME }}/sulasang ${{ secrets.DOCKERHUB_USERNAME }}/sulasang:${GITHUB_SHA::7}
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/sulasang:${GITHUB_SHA::7}
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }} .
+          docker tag ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }} ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }}:${GITHUB_SHA::7}
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }}:${GITHUB_SHA::7}
       - name: EC2 인스턴스 접속 및 애플리케이션 실행
         uses: appleboy/ssh-action@v0.1.6
         with:
@@ -94,8 +94,17 @@ jobs:
             exit
             
             docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin ${{ secrets.DOCKERHUB_PASSWORD }}
+            
+            echo "도커 ${{ secrets.DOCKERHUB_USERNAME }} 로그인 성공"
+            
             docker rmi $(docker images -q)
-            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/sulasang:${GITHUB_SHA::7}
+            
+            echo "도커 모든 이미지 제거"
+            
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }}:${GITHUB_SHA::7}
+            
+            echo "${GITHUB_SHA::7} 이미지 풀링"
+            
             sudo docker run -p ${{ secrets.PORT }}:${{ secrets.PORT }} \
             --name ${{ secrets.PROJECT_NAME }} \
             -e SPRING_DATASOURCE_URL=${{ secrets.DB_URL }} \
