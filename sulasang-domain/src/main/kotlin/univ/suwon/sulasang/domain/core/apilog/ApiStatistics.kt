@@ -28,7 +28,7 @@ class ApiStatistics(
         if (this.dayAndTypeRetrieveApiCallCount > 0) {
             val currentProcessTime = this.dayAndTypeRetrieveApiProcessTimeAvg * this.dayAndTypeRetrieveApiCallCount
             val totalProcessTime = currentProcessTime + processTime
-            this.dayAndTypeRetrieveApiProcessTimeAvg = totalProcessTime / dayAndTypeRetrieveApiCallCount
+            this.dayAndTypeRetrieveApiProcessTimeAvg = totalProcessTime / this.dayAndTypeRetrieveApiCallCount
         }
     }
 }
