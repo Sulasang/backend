@@ -12,3 +12,14 @@ create table diet
     created_at      datetime(6)                         not null,
     updated_at      datetime(6)                         not null
 );
+
+create table api_statistics
+(
+    id                                         bigint auto_increment primary key,
+    target_date                                date        not null,
+    day_and_type_retrieve_api_call_count       int         not null default 0,
+    day_and_type_retrieve_api_process_time_avg bigint      not null default 1,
+    is_deleted                                 bit         not null,
+    created_at                                 datetime(6) not null,
+    updated_at                                 datetime(6) not null
+);
