@@ -26,7 +26,6 @@ class ApiStatisticsInterceptor(
                 ApiStatistics::class.java
             )
             if (apiLoggerAnnotation != null) {
-                // API 요청이 들어온 시간 기록
                 val startTime = LocalDateTime.now()
                 request.setAttribute("startTime", startTime)
             }
