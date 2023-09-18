@@ -8,4 +8,4 @@ ARG JASYPT_ENCRYPTOR_PASSWORD
 
 ENV JASYPT_ENCRYPTOR_PASSWORD=$JASYPT_ENCRYPTOR_PASSWORD
 
-ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=prod", "sulasang-api.jar", "--jasypt.encryptor.password=$JASYPT_ENCRYPTOR_PASSWORD"]
+ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=prod", "sulasang-api.jar", "--jasypt.encryptor.password=${JASYPT_ENCRYPTOR_PASSWORD}"]
