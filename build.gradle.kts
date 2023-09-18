@@ -42,15 +42,15 @@ subprojects {
     apply(plugin = "application")
 
     dependencies {
-        implementation("org.springframework.boot:spring-boot-starter-web")
-        implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-        implementation("io.github.microutils:kotlin-logging:2.0.8")
+        implementation("org.springframework.boot:spring-boot-starter-web:3.1.0")
+        implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.14.2")
+        implementation("io.github.microutils:kotlin-logging:3.0.5")
 
-        implementation("org.jetbrains.kotlin:kotlin-reflect")
-        testImplementation("org.springframework.boot:spring-boot-starter-test")
+        implementation("org.jetbrains.kotlin:kotlin-reflect:1.8.10")
+        testImplementation("org.springframework.boot:spring-boot-starter-test:3.1.0")
 
         // SpringMockk
-        testImplementation("com.ninja-squad:springmockk:3.1.1")
+        testImplementation("com.ninja-squad:springmockk:4.0.2")
     }
 
     tasks.withType<KotlinCompile> {
