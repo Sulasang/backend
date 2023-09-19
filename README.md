@@ -8,5 +8,5 @@
 
 - [x] Jasypt
 - [x] Rest Docs
-- [ ] CI/CD
+- [x] CI/CD
 - [ ] Push Alarm
