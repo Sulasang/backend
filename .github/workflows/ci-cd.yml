@@ -37,14 +37,14 @@ jobs:
         run: ./gradlew clean build
         shell: bash
 
-      - name: EC2 인스턴스 접속 및 애플리케이션 실행
+      - name: API EC2 인스턴스 접속 및 애플리케이션 실행
         uses: appleboy/ssh-action@v0.1.6
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_KEY }}
           source: "sulasang-api/build/libs/sulasang-api-0.0.1-SNAPSHOT.jar"
-          target: "/home/ubuntu/sulasang-apiSNAPSHOT.jar"
+          target: "/home/ubuntu/sulasang-api.jar"
 
           script: |
             echo "EC2 접속 완료"
@@ -52,3 +52,19 @@ jobs:
             cd /home/ubuntu
             sudo fuser -k 8080/tcp
             sudo ./start-api.sh
+
+      - name: Crawler EC2 인스턴스 접속 및 애플리케이션 실행
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_KEY }}
+          source: "sulasang-crawler/build/libs/sulasang-api-0.0.1-SNAPSHOT.jar"
+          target: "/home/ubuntu/sulasang-crawler-SNAPSHOT.jar"
+
+          script: |
+            echo "EC2 접속 완료"
+
+            cd /home/ubuntu
+            sudo fuser -k 8081/tcp
+            sudo ./start-crawler.sh
