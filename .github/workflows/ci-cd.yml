@@ -53,6 +53,7 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_KEY }}
           script: |
+            sudo cd /home/ubuntu
             sudo fuser -k 8080/tcp
             sudo ./start-api-v2.sh
 
@@ -72,5 +73,6 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_KEY }}
           script: |
+            sudo cd /home/ubuntu
             sudo fuser -k 8081/tcp
             sudo ./start-crawler-v2.sh
