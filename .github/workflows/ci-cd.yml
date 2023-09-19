@@ -1,4 +1,4 @@
-name: Sulasang CI/CD with Gradle, Github Actions, Docker
+name: Sulasang CI/CD with Gradle, Github Actions
 
 on:
   push:
