@@ -45,12 +45,10 @@ jobs:
           key: ${{ secrets.EC2_KEY }}
 
           script: |
-            echo "EC2 접속 완료"
-
-            rsync -avz -e "ssh -o StrictHostKeyChecking=no" sulasang-api/build/libs/sulasang-api-0.0.1-SNAPSHOT.jar ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }}:/home/ubuntu/sulasang-api.jar
-  
-            sudo fuser -k 8080/tcp
-            sudo ./start-api.sh
+            echo "API EC2 접속 완료"
+            
+            scp -i ${{ secrets.EC2_KEY }} sulasang-api/build/libs/sulasang-api-0.0.1-SNAPSHOT.jar ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }}:/home/ubuntu/sulasang-api.jar
+            ssh -i ${{ secrets.EC2_KEY }} ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} "sudo fuser -k 8080/tcp && sudo ./start-api.sh"
 
       - name: Crawler EC2 인스턴스 접속 및 애플리케이션 실행
         uses: appleboy/ssh-action@v0.1.6
@@ -60,9 +58,7 @@ jobs:
           key: ${{ secrets.EC2_KEY }}
 
           script: |
-            echo "EC2 접속 완료"
+            echo "크롤러 EC2 접속 완료"
 
-            rsync -avz -e "ssh -o StrictHostKeyChecking=no" sulasang-api/build/libs/sulasang-crawler-0.0.1-SNAPSHOT.jar ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }}:/home/ubuntu/sulasang-crawler.jar
-
-            sudo fuser -k 8081/tcp
-            sudo ./start-crawler.sh
+            scp -i ${{ secrets.EC2_KEY }} sulasang-crawler/build/libs/sulasang-crawler-0.0.1-SNAPSHOT.jar ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }}:/home/ubuntu/sulasang-crawler.jar
+            ssh -i ${{ secrets.EC2_KEY }} ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} "sudo fuser -k 8081/tcp && sudo ./start-crawler.sh"
