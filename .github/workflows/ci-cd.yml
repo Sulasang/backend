@@ -59,7 +59,7 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_KEY }}
-          source: "sulasang-crawler/build/libs/sulasang-api-0.0.1-SNAPSHOT.jar"
+          source: "sulasang-crawler/build/libs/sulasang-crawler-0.0.1-SNAPSHOT.jar"
           target: "/home/ubuntu/sulasang-crawler-SNAPSHOT.jar"
 
           script: |
