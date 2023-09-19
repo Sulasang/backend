@@ -43,13 +43,12 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_KEY }}
-          source: "sulasang-api/build/libs/sulasang-api-0.0.1-SNAPSHOT.jar"
-          target: "/home/ubuntu/sulasang-api.jar"
 
           script: |
             echo "EC2 접속 완료"
+
+            rsync -avz -e "ssh -o StrictHostKeyChecking=no" sulasang-api/build/libs/sulasang-api-0.0.1-SNAPSHOT.jar ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }}:/home/ubuntu/sulasang-api.jar
   
-            cd /home/ubuntu
             sudo fuser -k 8080/tcp
             sudo ./start-api.sh
 
@@ -59,12 +58,11 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_KEY }}
-          source: "sulasang-crawler/build/libs/sulasang-crawler-0.0.1-SNAPSHOT.jar"
-          target: "/home/ubuntu/sulasang-crawler-SNAPSHOT.jar"
 
           script: |
             echo "EC2 접속 완료"
 
-            cd /home/ubuntu
+            rsync -avz -e "ssh -o StrictHostKeyChecking=no" sulasang-api/build/libs/sulasang-crawler-0.0.1-SNAPSHOT.jar ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }}:/home/ubuntu/sulasang-crawler.jar
+
             sudo fuser -k 8081/tcp
             sudo ./start-crawler.sh
