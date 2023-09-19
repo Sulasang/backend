@@ -55,7 +55,7 @@ jobs:
           script: |
             sudo cd /home/ubuntu
             sudo fuser -k 8080/tcp
-            sudo ./start-api-v2.sh
+            sudo ./start-api.sh
 
       - name: Crawler 빌드 파일 복사
         uses: appleboy/scp-action@master
@@ -75,4 +75,4 @@ jobs:
           script: |
             sudo cd /home/ubuntu
             sudo fuser -k 8081/tcp
-            sudo ./start-crawler-v2.sh
+            sudo ./start-crawler.sh
