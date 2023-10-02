@@ -53,56 +53,54 @@ class AceEducationCenterCrawlerV2(
         for (studentDietDatum in studentDietData) {
             val mondayDate = mergedLocalDate.first
 
-            if (studentDietDatum[COMPANY] == "Mom's Cook") {
-                if (studentDietDatum[MONDAY] != null) {
-                    insertStudentDietContainingCommonMenu(
-                        studentDietDatum,
-                        mondayDate,
-                        MONDAY,
-                        splitMainMenuAndCommonMenu(studentDietDatum[MONDAY]!!).first,
-                        splitMainMenuAndCommonMenu(studentDietDatum[MONDAY]!!).second
-                    )
-                }
+            if (studentDietDatum[MONDAY] != null) {
+                insertStudentDietContainingCommonMenu(
+                    studentDietDatum,
+                    mondayDate,
+                    MONDAY,
+                    splitMainMenuAndCommonMenu(studentDietDatum[MONDAY]!!).first,
+                    splitMainMenuAndCommonMenu(studentDietDatum[MONDAY]!!).second
+                )
+            }
 
-                if (studentDietDatum[TUESDAY] != null) {
-                    insertStudentDietContainingCommonMenu(
-                        studentDietDatum,
-                        mondayDate,
-                        TUESDAY,
-                        splitMainMenuAndCommonMenu(studentDietDatum[TUESDAY]!!).first,
-                        splitMainMenuAndCommonMenu(studentDietDatum[TUESDAY]!!).second
-                    )
-                }
+            if (studentDietDatum[TUESDAY] != null) {
+                insertStudentDietContainingCommonMenu(
+                    studentDietDatum,
+                    mondayDate,
+                    TUESDAY,
+                    splitMainMenuAndCommonMenu(studentDietDatum[TUESDAY]!!).first,
+                    splitMainMenuAndCommonMenu(studentDietDatum[TUESDAY]!!).second
+                )
+            }
 
-                if (studentDietDatum[WEDNESDAY] != null) {
-                    insertStudentDietContainingCommonMenu(
-                        studentDietDatum,
-                        mondayDate,
-                        WEDNESDAY,
-                        splitMainMenuAndCommonMenu(studentDietDatum[WEDNESDAY]!!).first,
-                        splitMainMenuAndCommonMenu(studentDietDatum[WEDNESDAY]!!).second
-                    )
-                }
+            if (studentDietDatum[WEDNESDAY] != null) {
+                insertStudentDietContainingCommonMenu(
+                    studentDietDatum,
+                    mondayDate,
+                    WEDNESDAY,
+                    splitMainMenuAndCommonMenu(studentDietDatum[WEDNESDAY]!!).first,
+                    splitMainMenuAndCommonMenu(studentDietDatum[WEDNESDAY]!!).second
+                )
+            }
 
-                if (studentDietDatum[THURSDAY] != null) {
-                    insertStudentDietContainingCommonMenu(
-                        studentDietDatum,
-                        mondayDate,
-                        THURSDAY,
-                        splitMainMenuAndCommonMenu(studentDietDatum[THURSDAY]!!).first,
-                        splitMainMenuAndCommonMenu(studentDietDatum[THURSDAY]!!).second
-                    )
-                }
+            if (studentDietDatum[THURSDAY] != null) {
+                insertStudentDietContainingCommonMenu(
+                    studentDietDatum,
+                    mondayDate,
+                    THURSDAY,
+                    splitMainMenuAndCommonMenu(studentDietDatum[THURSDAY]!!).first,
+                    splitMainMenuAndCommonMenu(studentDietDatum[THURSDAY]!!).second
+                )
+            }
 
-                if (studentDietDatum[FRIDAY] != null) {
-                    insertStudentDietContainingCommonMenu(
-                        studentDietDatum,
-                        mondayDate,
-                        FRIDAY,
-                        splitMainMenuAndCommonMenu(studentDietDatum[FRIDAY]!!).first,
-                        splitMainMenuAndCommonMenu(studentDietDatum[FRIDAY]!!).second
-                    )
-                }
+            if (studentDietDatum[FRIDAY] != null) {
+                insertStudentDietContainingCommonMenu(
+                    studentDietDatum,
+                    mondayDate,
+                    FRIDAY,
+                    splitMainMenuAndCommonMenu(studentDietDatum[FRIDAY]!!).first,
+                    splitMainMenuAndCommonMenu(studentDietDatum[FRIDAY]!!).second
+                )
             }
         }
     }
