@@ -1,4 +1,4 @@
-package univ.suwon.sulasang.component
+package univ.suwon.sulasang.component.v1
 
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional

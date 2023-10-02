@@ -1,4 +1,4 @@
-package univ.suwon.sulasang.component
+package univ.suwon.sulasang.component.v1
 
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
