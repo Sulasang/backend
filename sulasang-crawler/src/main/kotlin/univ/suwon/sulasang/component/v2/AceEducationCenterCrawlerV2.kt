@@ -114,65 +114,141 @@ class AceEducationCenterCrawlerV2(
     ) {
 
         when (dayConst) {
-            MONDAY -> dietRepository.save(
-                Diet(
-                    dayOfWeek = DayOfWeek.MONDAY,
-                    day = mondayDate,
-                    mainMenu = mainMenu,
-                    commonMenu = commonMenu,
-                    mealType = MealType.convertByString(studentDietDatum[TYPE]!!),
-                    restaurantType = RestaurantType.ACE_EDUCATION_CENTER_STUDENT,
-                    company = Company(studentDietDatum[COMPANY]!!)
-                )
-            )
 
-            TUESDAY -> dietRepository.save(
-                Diet(
-                    dayOfWeek = DayOfWeek.TUESDAY,
-                    day = mondayDate.plusDays(1),
-                    mainMenu = mainMenu,
-                    commonMenu = commonMenu,
-                    mealType = MealType.convertByString(studentDietDatum[TYPE]!!),
-                    restaurantType = RestaurantType.ACE_EDUCATION_CENTER_STUDENT,
-                    company = Company(studentDietDatum[COMPANY]!!)
-                )
-            )
+            MONDAY ->
+                if ((mainMenu == HOLIDAYS || commonMenu == HOLIDAYS) || (mainMenu == EMPTY_DAY || commonMenu == EMPTY_DAY)) {
+                    dietRepository.save(
+                        Diet(
+                            dayOfWeek = DayOfWeek.MONDAY,
+                            day = mondayDate,
+                            mainMenu = null,
+                            commonMenu = null,
+                            mealType = MealType.convertByString(studentDietDatum[TYPE]!!),
+                            restaurantType = RestaurantType.ACE_EDUCATION_CENTER_STUDENT,
+                            company = null
+                        )
+                    )
+                } else {
+                    dietRepository.save(
+                        Diet(
+                            dayOfWeek = DayOfWeek.MONDAY,
+                            day = mondayDate,
+                            mainMenu = mainMenu,
+                            commonMenu = commonMenu,
+                            mealType = MealType.convertByString(studentDietDatum[TYPE]!!),
+                            restaurantType = RestaurantType.ACE_EDUCATION_CENTER_STUDENT,
+                            company = Company(studentDietDatum[COMPANY]!!)
+                        )
+                    )
+                }
 
-            WEDNESDAY -> dietRepository.save(
-                Diet(
-                    dayOfWeek = DayOfWeek.WEDNESDAY,
-                    day = mondayDate.plusDays(2),
-                    mainMenu = mainMenu,
-                    commonMenu = commonMenu,
-                    mealType = MealType.convertByString(studentDietDatum[TYPE]!!),
-                    restaurantType = RestaurantType.ACE_EDUCATION_CENTER_STUDENT,
-                    company = Company(studentDietDatum[COMPANY]!!)
-                )
-            )
+            TUESDAY ->
+                if ((mainMenu == HOLIDAYS || commonMenu == HOLIDAYS) || (mainMenu == EMPTY_DAY || commonMenu == EMPTY_DAY)) {
+                    dietRepository.save(
+                        Diet(
+                            dayOfWeek = DayOfWeek.MONDAY,
+                            day = mondayDate,
+                            mainMenu = null,
+                            commonMenu = null,
+                            mealType = MealType.convertByString(studentDietDatum[TYPE]!!),
+                            restaurantType = RestaurantType.ACE_EDUCATION_CENTER_STUDENT,
+                            company = null
+                        )
+                    )
+                } else {
+                    dietRepository.save(
+                        Diet(
+                            dayOfWeek = DayOfWeek.TUESDAY,
+                            day = mondayDate.plusDays(1),
+                            mainMenu = mainMenu,
+                            commonMenu = commonMenu,
+                            mealType = MealType.convertByString(studentDietDatum[TYPE]!!),
+                            restaurantType = RestaurantType.ACE_EDUCATION_CENTER_STUDENT,
+                            company = Company(studentDietDatum[COMPANY]!!)
+                        )
+                    )
+                }
 
-            THURSDAY -> dietRepository.save(
-                Diet(
-                    dayOfWeek = DayOfWeek.THURSDAY,
-                    day = mondayDate.plusDays(3),
-                    mainMenu = mainMenu,
-                    commonMenu = commonMenu,
-                    mealType = MealType.convertByString(studentDietDatum[TYPE]!!),
-                    restaurantType = RestaurantType.ACE_EDUCATION_CENTER_STUDENT,
-                    company = Company(studentDietDatum[COMPANY]!!)
-                )
-            )
+            WEDNESDAY ->
+                if ((mainMenu == HOLIDAYS || commonMenu == HOLIDAYS) || (mainMenu == EMPTY_DAY || commonMenu == EMPTY_DAY)) {
+                    dietRepository.save(
+                        Diet(
+                            dayOfWeek = DayOfWeek.MONDAY,
+                            day = mondayDate,
+                            mainMenu = null,
+                            commonMenu = null,
+                            mealType = MealType.convertByString(studentDietDatum[TYPE]!!),
+                            restaurantType = RestaurantType.ACE_EDUCATION_CENTER_STUDENT,
+                            company = null
+                        )
+                    )
+                } else {
+                    dietRepository.save(
+                        Diet(
+                            dayOfWeek = DayOfWeek.WEDNESDAY,
+                            day = mondayDate.plusDays(2),
+                            mainMenu = mainMenu,
+                            commonMenu = commonMenu,
+                            mealType = MealType.convertByString(studentDietDatum[TYPE]!!),
+                            restaurantType = RestaurantType.ACE_EDUCATION_CENTER_STUDENT,
+                            company = Company(studentDietDatum[COMPANY]!!)
+                        )
+                    )
+                }
 
-            FRIDAY -> dietRepository.save(
-                Diet(
-                    dayOfWeek = DayOfWeek.FRIDAY,
-                    day = mondayDate.plusDays(4),
-                    mainMenu = mainMenu,
-                    commonMenu = commonMenu,
-                    mealType = MealType.convertByString(studentDietDatum[TYPE]!!),
-                    restaurantType = RestaurantType.ACE_EDUCATION_CENTER_STUDENT,
-                    company = Company(studentDietDatum[COMPANY]!!)
-                )
-            )
+            THURSDAY ->
+                if ((mainMenu == HOLIDAYS || commonMenu == HOLIDAYS) || (mainMenu == EMPTY_DAY || commonMenu == EMPTY_DAY)) {
+                    dietRepository.save(
+                        Diet(
+                            dayOfWeek = DayOfWeek.MONDAY,
+                            day = mondayDate,
+                            mainMenu = null,
+                            commonMenu = null,
+                            mealType = MealType.convertByString(studentDietDatum[TYPE]!!),
+                            restaurantType = RestaurantType.ACE_EDUCATION_CENTER_STUDENT,
+                            company = null
+                        )
+                    )
+                } else {
+                    dietRepository.save(
+                        Diet(
+                            dayOfWeek = DayOfWeek.THURSDAY,
+                            day = mondayDate.plusDays(3),
+                            mainMenu = mainMenu,
+                            commonMenu = commonMenu,
+                            mealType = MealType.convertByString(studentDietDatum[TYPE]!!),
+                            restaurantType = RestaurantType.ACE_EDUCATION_CENTER_STUDENT,
+                            company = Company(studentDietDatum[COMPANY]!!)
+                        )
+                    )
+                }
+
+            FRIDAY ->
+                if ((mainMenu == HOLIDAYS || commonMenu == HOLIDAYS) || (mainMenu == EMPTY_DAY || commonMenu == EMPTY_DAY)) {
+                    dietRepository.save(
+                        Diet(
+                            dayOfWeek = DayOfWeek.MONDAY,
+                            day = mondayDate,
+                            mainMenu = null,
+                            commonMenu = null,
+                            mealType = MealType.convertByString(studentDietDatum[TYPE]!!),
+                            restaurantType = RestaurantType.ACE_EDUCATION_CENTER_STUDENT,
+                            company = null
+                        )
+                    )
+                } else {
+                    dietRepository.save(
+                        Diet(
+                            dayOfWeek = DayOfWeek.FRIDAY,
+                            day = mondayDate.plusDays(4),
+                            mainMenu = mainMenu,
+                            commonMenu = commonMenu,
+                            mealType = MealType.convertByString(studentDietDatum[TYPE]!!),
+                            restaurantType = RestaurantType.ACE_EDUCATION_CENTER_STUDENT,
+                            company = Company(studentDietDatum[COMPANY]!!)
+                        )
+                    )
+                }
         }
     }
 
@@ -290,11 +366,14 @@ class AceEducationCenterCrawlerV2(
     }
 
     private fun splitMainMenuAndCommonMenu(menu: String): Pair<String, String> {
-        val temp = menu.split(" (공통메뉴) ")
-        val mainMenu = temp[0]
-        val commonMenu = temp[1]
-
-        return Pair(mainMenu, commonMenu)
+        return if (menu.contains(HOLIDAYS) || menu == EMPTY_DAY) {
+            Pair("", "")
+        } else {
+            val temp = menu.split(" (공통메뉴) ")
+            val mainMenu = temp[0]
+            val commonMenu = temp[1]
+            Pair(mainMenu, commonMenu)
+        }
     }
 
     private fun extractLocalDate(doc: Document): Pair<LocalDate, LocalDate> {
@@ -366,5 +445,9 @@ class AceEducationCenterCrawlerV2(
         return studentDietData
     }
 
+    companion object {
+        private const val HOLIDAYS = "연휴"
+        private const val EMPTY_DAY = ""
 
+    }
 }
