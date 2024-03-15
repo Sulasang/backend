@@ -1,6 +1,6 @@
 package univ.suwon.sulasang.component.consts
 
-object AmaraenseuConst {
+object AmarenseCenterConst {
     internal const val URL = "https://www.suwon.ac.kr/index.html?menuno=1793"
     internal const val TABLE_DOM = "table"
     internal const val ROW_DOM = "tr"

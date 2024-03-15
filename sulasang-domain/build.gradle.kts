@@ -3,7 +3,7 @@ dependencies {
     runtimeOnly("com.mysql:mysql-connector-j:8.0.32")
 
     // jasypt
-    api("com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.5")
+    api("com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.3")
 
     // querydsl
     implementation ("com.querydsl:querydsl-jpa:5.0.0:jakarta")

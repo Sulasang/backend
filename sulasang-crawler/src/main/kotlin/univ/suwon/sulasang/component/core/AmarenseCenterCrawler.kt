@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import univ.suwon.sulasang.common.common.util.StartEndDateConverter
 import univ.suwon.sulasang.component.consts.AceEducationCenterConst
+import univ.suwon.sulasang.component.consts.AmarenseCenterConst
 import univ.suwon.sulasang.domain.diet.persistence.embbeded.DayOfWeeks
 import univ.suwon.sulasang.domain.diet.service.amarence.CreateAmarenceCenterDietService
 import univ.suwon.sulasang.domain.diet.service.amarence.CreateAmarenceCenterHolidayDietService
@@ -21,7 +22,7 @@ class AmarenseCenterCrawler(
 
     @Transactional
     fun execute() {
-        val doc = Jsoup.connect(AceEducationCenterConst.URL).get()
+        val doc = Jsoup.connect(AmarenseCenterConst.URL).get()
         val mergedLocalDate = extractLocalDate(doc)
 
         saveStudentDietsByDocAndLocalDate(doc, mergedLocalDate)
