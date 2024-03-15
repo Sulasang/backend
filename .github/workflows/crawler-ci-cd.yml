@@ -53,6 +53,7 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_KEY }}
           script: |
-            sudo cd /home/ubuntu
-            sudo fuser -k 8081/tcp
-            sudo ./operate-crawler.sh
+            sudo su
+            cd /home/ec2-user
+            fuser -k 8081/tcp
+            ./operate-crawler.sh

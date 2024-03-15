@@ -53,9 +53,10 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_KEY }}
           script: |
-            sudo cd /home/ec2-user
-            sudo fuser -k 8080/tcp
-            sudo ./operate-api.sh
+            sudo su
+            cd /home/ec2-user
+            fuser -k 8080/tcp
+            ./operate-api.sh
 
       - name: Crawler 빌드 파일 복사
         uses: appleboy/scp-action@master
@@ -73,6 +74,7 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_KEY }}
           script: |
-            sudo cd /home/ubuntu
-            sudo fuser -k 8081/tcp
-            sudo ./operate-crawler.sh
+            sudo su
+            cd /home/ubuntu
+            fuser -k 8081/tcp
+            ./operate-crawler.sh

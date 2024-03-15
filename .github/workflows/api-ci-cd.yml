@@ -53,6 +53,7 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_KEY }}
           script: |
-            sudo cd /home/ec2-user
-            sudo fuser -k 8080/tcp
-            sudo ./operate-api.sh
+            sudo su
+            cd /home/ec2-user
+            fuser -k 8080/tcp
+            ./operate-api.sh
