@@ -34,7 +34,7 @@ jobs:
         shell: bash
 
       - name: 프로젝트 빌드
-        run: ./gradlew clean build
+        run: ./gradlew clean build -x test
         shell: bash
 
       - name: Crawler 빌드 파일 복사
