@@ -153,8 +153,8 @@ class AmarenseCenterCrawler(
             val mainMenuLines = lines.subList(mainMenuStartIndex, commonMenuStartIndex - 1)
             val commonMenuLines = lines.subList(commonMenuStartIndex, lines.size)
 
-            val mainMenuString = mainMenuLines.joinToString("\n")
-            val commonMenuString = commonMenuLines.joinToString("\n")
+            val mainMenuString = mainMenuLines.joinToString(" ")
+            val commonMenuString = commonMenuLines.joinToString(" ")
 
             Pair(mainMenuString, commonMenuString)
         }
