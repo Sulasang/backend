@@ -1,4 +1,4 @@
-name: Sulasang API CI/CD with Gradle, Github Actions
+name: Sulasang API-Crawler CI/CD with Gradle, Github Actions
 
 on:
   push:
