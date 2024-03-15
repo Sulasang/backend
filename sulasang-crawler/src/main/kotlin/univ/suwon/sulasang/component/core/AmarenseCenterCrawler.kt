@@ -1,0 +1,178 @@
+package univ.suwon.sulasang.component.core
+
+import org.jsoup.Jsoup
+import org.jsoup.nodes.Document
+import org.jsoup.nodes.Element
+import org.jsoup.select.Elements
+import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
+import univ.suwon.sulasang.common.common.util.StartEndDateConverter
+import univ.suwon.sulasang.component.consts.AceEducationCenterConst
+import univ.suwon.sulasang.domain.diet.persistence.embbeded.DayOfWeeks
+import univ.suwon.sulasang.domain.diet.service.amarence.CreateAmarenceCenterDietService
+import univ.suwon.sulasang.domain.diet.service.amarence.CreateAmarenceCenterHolidayDietService
+import java.time.LocalDate
+
+@Component
+class AmarenseCenterCrawler(
+    private val createAmarenceCenterDietService: CreateAmarenceCenterDietService,
+    private val createAmarenceCenterHolidayDietService: CreateAmarenceCenterHolidayDietService
+) {
+
+    @Transactional
+    fun execute() {
+        val doc = Jsoup.connect(AceEducationCenterConst.URL).get()
+        val mergedLocalDate = extractLocalDate(doc)
+
+        saveStudentDietsByDocAndLocalDate(doc, mergedLocalDate)
+    }
+
+    private fun saveStudentDietsByDocAndLocalDate(
+        doc: Document,
+        mergedLocalDate: Pair<LocalDate, LocalDate>
+    ) {
+        val studentTable = extractStudentDietTable(doc)
+        val studentDietData = extractStudentDietData(studentTable)
+        saveStudentDiets(mergedLocalDate, studentDietData)
+    }
+
+    private fun saveStudentDiets(
+        mergedLocalDate: Pair<LocalDate, LocalDate>,
+        studentDietData: List<Map<String, String>>
+    ) {
+        for (studentDietDatum in studentDietData) {
+            val mondayDate = mergedLocalDate.first
+
+            if (isNotHoliday(studentDietDatum, MONDAY)) {
+                createAmarenceCenterDietService.saveAmarenceCenterStudentDiet(
+                    day = mondayDate,
+                    dayOfWeeks = DayOfWeeks.MONDAY,
+                    mainMenu = studentDietDatum[MONDAY]!!,
+                    studentDietDatum = studentDietDatum
+                )
+            } else {
+                createAmarenceCenterHolidayDietService.saveHolidayAmarenceCenterStudent(
+                    day = mondayDate,
+                    dayOfWeeks = DayOfWeeks.MONDAY,
+                    studentDietDatum = studentDietDatum
+                )
+            }
+
+            if (isNotHoliday(studentDietDatum, TUESDAY)) {
+                createAmarenceCenterDietService.saveAmarenceCenterStudentDiet(
+                    day = mondayDate.plusDays(1),
+                    dayOfWeeks = DayOfWeeks.TUESDAY,
+                    mainMenu = studentDietDatum[TUESDAY]!!,
+                    studentDietDatum = studentDietDatum
+                )
+            } else {
+                createAmarenceCenterHolidayDietService.saveHolidayAmarenceCenterStudent(
+                    day = mondayDate.plusDays(1),
+                    dayOfWeeks = DayOfWeeks.TUESDAY,
+                    studentDietDatum = studentDietDatum
+                )
+            }
+
+            if (isNotHoliday(studentDietDatum, WEDNESDAY)) {
+                createAmarenceCenterDietService.saveAmarenceCenterStudentDiet(
+                    day = mondayDate.plusDays(2),
+                    dayOfWeeks = DayOfWeeks.WEDNESDAY,
+                    mainMenu = studentDietDatum[WEDNESDAY]!!,
+                    studentDietDatum = studentDietDatum
+                )
+            } else {
+                createAmarenceCenterHolidayDietService.saveHolidayAmarenceCenterStudent(
+                    day = mondayDate.plusDays(2),
+                    dayOfWeeks = DayOfWeeks.WEDNESDAY,
+                    studentDietDatum = studentDietDatum
+                )
+            }
+
+            if (isNotHoliday(studentDietDatum, THURSDAY)) {
+                createAmarenceCenterDietService.saveAmarenceCenterStudentDiet(
+                    day = mondayDate.plusDays(3),
+                    dayOfWeeks = DayOfWeeks.THURSDAY,
+                    mainMenu = studentDietDatum[THURSDAY]!!,
+                    studentDietDatum = studentDietDatum
+                )
+            } else {
+                createAmarenceCenterHolidayDietService.saveHolidayAmarenceCenterStudent(
+                    day = mondayDate.plusDays(3),
+                    dayOfWeeks = DayOfWeeks.THURSDAY,
+                    studentDietDatum = studentDietDatum
+                )
+            }
+
+            if (isNotHoliday(studentDietDatum, FRIDAY)) {
+                createAmarenceCenterDietService.saveAmarenceCenterStudentDiet(
+                    day = mondayDate.plusDays(4),
+                    dayOfWeeks = DayOfWeeks.FRIDAY,
+                    mainMenu = studentDietDatum[FRIDAY]!!,
+                    studentDietDatum = studentDietDatum
+                )
+            } else {
+                createAmarenceCenterHolidayDietService.saveHolidayAmarenceCenterStudent(
+                    day = mondayDate,
+                    dayOfWeeks = DayOfWeeks.FRIDAY,
+                    studentDietDatum = studentDietDatum
+                )
+            }
+        }
+    }
+
+    private fun isNotHoliday(dietDatum: Map<String, String>, dayOfWeeks: String) = dietDatum[dayOfWeeks] != EMPTY_MENU
+
+    private fun extractLocalDate(doc: Document): Pair<LocalDate, LocalDate> {
+        return StartEndDateConverter.extractWeeks(
+            doc.getElementsByClass(AceEducationCenterConst.LOCAL_DATE_DOM).text().substring(0, 29)
+        )
+    }
+
+    private fun extractStudentDietTable(doc: Document) = doc.select(AceEducationCenterConst.TABLE_DOM).first()
+
+    private fun extractStudentDietData(
+        studentTable: Element?,
+    ): MutableList<MutableMap<String, String>> {
+        val studentDietData = mutableListOf<MutableMap<String, String>>()
+        if (studentTable != null) {
+            val rows: Elements = studentTable.select(AceEducationCenterConst.ROW_DOM)
+
+            for (row in rows) {
+
+                val columns: Elements = row.select(AceEducationCenterConst.COLUMN_DOM)
+                val map = mutableMapOf<String, String>()
+
+                if (columns.isNotEmpty()) {
+                    for ((i, column) in columns.withIndex()) {
+                        val text = if (column.text().length <= 10 && i != 0) "" else column.text()
+                        when (i) {
+                            0 -> map[TYPE] = text
+                            1 -> map[COMPANY] = text
+                            2 -> map[MONDAY] = text
+                            3 -> map[TUESDAY] = text
+                            4 -> map[WEDNESDAY] = text
+                            5 -> map[THURSDAY] = text
+                            6 -> map[FRIDAY] = text
+                        }
+                    }
+                    studentDietData.add(map)
+                }
+            }
+        }
+        return studentDietData
+    }
+
+    companion object {
+        private const val EMPTY_MENU = ""
+
+        internal const val TYPE = "type"
+        internal const val COMPANY = "company"
+
+        private const val MONDAY = "monday"
+        private const val TUESDAY = "tuesday"
+        private const val WEDNESDAY = "wednesday"
+        private const val THURSDAY = "thursday"
+        private const val FRIDAY = "friday"
+    }
+}
+

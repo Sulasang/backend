@@ -1,16 +1,15 @@
 create table diet
 (
     id              bigint auto_increment primary key,
-    day_of_week     tinyint                             not null,
-    day             date                                not null,
-    main_menu       varchar(255)                        null,
-    common_menu     varchar(255)                        null,
-    company_name    varchar(255)                        null,
+    day             date not null,
+    day_of_week     enum ('FRIDAY', 'MONDAY', 'THURSDAY', 'TUESDAY', 'WEDNESDAY') null,
+    common_menu     varchar(255) null,
+    main_menu       varchar(255) null,
+    company_name    varchar(255) null,
     meal_type       enum ('DINNER', 'LUNCH', 'MORNING') null,
-    restaurant_type enum ('STAFF', 'STUDENT')           null,
-    is_deleted      bit                                 not null,
-    created_at      datetime(6)                         not null,
-    updated_at      datetime(6)                         not null
+    restaurant_type enum ('ACE_EDUCATION_CENTER_STAFF', 'ACE_EDUCATION_CENTER_STUDENT', 'AMARAENSE_STAFF', 'AMARAENSE_STUDENT') null,
+    created_at      datetime(6) not null,
+    updated_at      datetime(6) not null
 );
 
 create table api_statistics
