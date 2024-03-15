@@ -11,7 +11,7 @@ data class DietRetrieveWeeklyResponse(
         fun of(diets: List<Diet>): DietRetrieveWeeklyResponse {
             val formed = diets.map { diet ->
                 WeeklyDietInfo(
-                    company = diet.company?.companyName.orEmpty(),
+                    company = diet.restaurantType.name,
                     commonMenu = diet.commonMenu.orEmpty().split(" "),
                     mainMenu = diet.mainMenu.orEmpty().split(" "),
                     day = diet.day,
@@ -32,7 +32,7 @@ data class DietRetrieveDateAndTypeResponse(
         fun of(diets: List<Diet>): DietRetrieveDateAndTypeResponse {
             val formed = diets.map { diet ->
                 DateAndTypeDietInfo(
-                    company = diet.company?.companyName.orEmpty(),
+                    company = diet.restaurantType.name,
                     commonMenu = diet.commonMenu.orEmpty().split(" "),
                     mainMenu = diet.mainMenu.orEmpty().split(" "),
                     mealType = diet.mealType.info.orEmpty(),
