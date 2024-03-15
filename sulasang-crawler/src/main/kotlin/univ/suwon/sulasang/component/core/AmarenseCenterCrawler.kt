@@ -45,10 +45,14 @@ class AmarenseCenterCrawler(
             val mondayDate = mergedLocalDate.first
 
             if (isNotHoliday(studentDietDatum, MONDAY)) {
+                val mainMenu = splitMainMenuAndCommonMenu(studentDietDatum[MONDAY]!!).first
+                val commonMenu = splitMainMenuAndCommonMenu(studentDietDatum[MONDAY]!!).second
+
                 createAmarenceCenterDietService.saveAmarenceCenterStudentDiet(
                     day = mondayDate,
                     dayOfWeeks = DayOfWeeks.MONDAY,
-                    mainMenu = studentDietDatum[MONDAY]!!,
+                    mainMenu = mainMenu,
+                    commonMenu = commonMenu,
                     studentDietDatum = studentDietDatum
                 )
             } else {
@@ -60,10 +64,14 @@ class AmarenseCenterCrawler(
             }
 
             if (isNotHoliday(studentDietDatum, TUESDAY)) {
+                val mainMenu = splitMainMenuAndCommonMenu(studentDietDatum[TUESDAY]!!).first
+                val commonMenu = splitMainMenuAndCommonMenu(studentDietDatum[TUESDAY]!!).second
+
                 createAmarenceCenterDietService.saveAmarenceCenterStudentDiet(
                     day = mondayDate.plusDays(1),
                     dayOfWeeks = DayOfWeeks.TUESDAY,
-                    mainMenu = studentDietDatum[TUESDAY]!!,
+                    mainMenu = mainMenu,
+                    commonMenu = commonMenu,
                     studentDietDatum = studentDietDatum
                 )
             } else {
@@ -75,10 +83,14 @@ class AmarenseCenterCrawler(
             }
 
             if (isNotHoliday(studentDietDatum, WEDNESDAY)) {
+                val mainMenu = splitMainMenuAndCommonMenu(studentDietDatum[WEDNESDAY]!!).first
+                val commonMenu = splitMainMenuAndCommonMenu(studentDietDatum[WEDNESDAY]!!).second
+
                 createAmarenceCenterDietService.saveAmarenceCenterStudentDiet(
                     day = mondayDate.plusDays(2),
                     dayOfWeeks = DayOfWeeks.WEDNESDAY,
-                    mainMenu = studentDietDatum[WEDNESDAY]!!,
+                    mainMenu = mainMenu,
+                    commonMenu = commonMenu,
                     studentDietDatum = studentDietDatum
                 )
             } else {
@@ -90,10 +102,14 @@ class AmarenseCenterCrawler(
             }
 
             if (isNotHoliday(studentDietDatum, THURSDAY)) {
+                val mainMenu = splitMainMenuAndCommonMenu(studentDietDatum[THURSDAY]!!).first
+                val commonMenu = splitMainMenuAndCommonMenu(studentDietDatum[THURSDAY]!!).second
+
                 createAmarenceCenterDietService.saveAmarenceCenterStudentDiet(
                     day = mondayDate.plusDays(3),
                     dayOfWeeks = DayOfWeeks.THURSDAY,
-                    mainMenu = studentDietDatum[THURSDAY]!!,
+                    mainMenu = mainMenu,
+                    commonMenu = commonMenu,
                     studentDietDatum = studentDietDatum
                 )
             } else {
@@ -105,10 +121,14 @@ class AmarenseCenterCrawler(
             }
 
             if (isNotHoliday(studentDietDatum, FRIDAY)) {
+                val mainMenu = splitMainMenuAndCommonMenu(studentDietDatum[THURSDAY]!!).first
+                val commonMenu = splitMainMenuAndCommonMenu(studentDietDatum[THURSDAY]!!).second
+
                 createAmarenceCenterDietService.saveAmarenceCenterStudentDiet(
                     day = mondayDate.plusDays(4),
                     dayOfWeeks = DayOfWeeks.FRIDAY,
-                    mainMenu = studentDietDatum[FRIDAY]!!,
+                    mainMenu = mainMenu,
+                    commonMenu = commonMenu,
                     studentDietDatum = studentDietDatum
                 )
             } else {
@@ -118,6 +138,25 @@ class AmarenseCenterCrawler(
                     studentDietDatum = studentDietDatum
                 )
             }
+        }
+    }
+
+    private fun splitMainMenuAndCommonMenu(menu: String): Pair<String, String> {
+        return if (menu == EMPTY_MENU) {
+            Pair(EMPTY_MENU, EMPTY_MENU)
+        } else {
+            val lines = menu.split(" ")
+
+            val mainMenuStartIndex = lines.indexOf("[선택메뉴]") + 1
+            val commonMenuStartIndex = lines.indexOf("[공통찬]") + 1
+
+            val mainMenuLines = lines.subList(mainMenuStartIndex, commonMenuStartIndex - 1)
+            val commonMenuLines = lines.subList(commonMenuStartIndex, lines.size)
+
+            val mainMenuString = mainMenuLines.joinToString("\n")
+            val commonMenuString = commonMenuLines.joinToString("\n")
+
+            Pair(mainMenuString, commonMenuString)
         }
     }
 

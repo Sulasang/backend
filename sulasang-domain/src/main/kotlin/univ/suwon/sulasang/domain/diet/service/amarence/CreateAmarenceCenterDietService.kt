@@ -20,6 +20,7 @@ class CreateAmarenceCenterDietService(
         day: LocalDate,
         dayOfWeeks: DayOfWeeks,
         mainMenu: String,
+        commonMenu: String,
         studentDietDatum: Map<String, String>
     ) {
         dietRepository.save(
@@ -27,7 +28,7 @@ class CreateAmarenceCenterDietService(
                 day = day,
                 dayOfWeek = dayOfWeeks,
                 mainMenu = mainMenu,
-                commonMenu = "",
+                commonMenu = commonMenu,
                 company = Company(studentDietDatum["company"]!!),
                 mealType = MealType.convertByString(studentDietDatum["type"]!!),
                 restaurantType = RestaurantType.AMARAENSE_STUDENT
