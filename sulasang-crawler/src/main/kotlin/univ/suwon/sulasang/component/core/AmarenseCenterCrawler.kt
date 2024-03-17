@@ -45,14 +45,11 @@ class AmarenseCenterCrawler(
             val mondayDate = mergedLocalDate.first
 
             if (isNotHoliday(studentDietDatum, MONDAY)) {
-                val mainMenu = splitMainMenuAndCommonMenu(studentDietDatum[MONDAY]!!).first
-                val commonMenu = splitMainMenuAndCommonMenu(studentDietDatum[MONDAY]!!).second
-
                 createAmarenceCenterDietService.saveAmarenceCenterStudentDiet(
                     day = mondayDate,
                     dayOfWeeks = DayOfWeeks.MONDAY,
-                    mainMenu = mainMenu,
-                    commonMenu = commonMenu,
+                    mainMenu = studentDietDatum[MONDAY]!!,
+                    commonMenu = "",
                     studentDietDatum = studentDietDatum
                 )
             } else {
@@ -64,14 +61,12 @@ class AmarenseCenterCrawler(
             }
 
             if (isNotHoliday(studentDietDatum, TUESDAY)) {
-                val mainMenu = splitMainMenuAndCommonMenu(studentDietDatum[TUESDAY]!!).first
-                val commonMenu = splitMainMenuAndCommonMenu(studentDietDatum[TUESDAY]!!).second
 
                 createAmarenceCenterDietService.saveAmarenceCenterStudentDiet(
                     day = mondayDate.plusDays(1),
                     dayOfWeeks = DayOfWeeks.TUESDAY,
-                    mainMenu = mainMenu,
-                    commonMenu = commonMenu,
+                    mainMenu = studentDietDatum[TUESDAY]!!,
+                    commonMenu = "",
                     studentDietDatum = studentDietDatum
                 )
             } else {
@@ -83,14 +78,11 @@ class AmarenseCenterCrawler(
             }
 
             if (isNotHoliday(studentDietDatum, WEDNESDAY)) {
-                val mainMenu = splitMainMenuAndCommonMenu(studentDietDatum[WEDNESDAY]!!).first
-                val commonMenu = splitMainMenuAndCommonMenu(studentDietDatum[WEDNESDAY]!!).second
-
                 createAmarenceCenterDietService.saveAmarenceCenterStudentDiet(
                     day = mondayDate.plusDays(2),
                     dayOfWeeks = DayOfWeeks.WEDNESDAY,
-                    mainMenu = mainMenu,
-                    commonMenu = commonMenu,
+                    mainMenu = studentDietDatum[WEDNESDAY]!!,
+                    commonMenu = "",
                     studentDietDatum = studentDietDatum
                 )
             } else {
@@ -102,14 +94,11 @@ class AmarenseCenterCrawler(
             }
 
             if (isNotHoliday(studentDietDatum, THURSDAY)) {
-                val mainMenu = splitMainMenuAndCommonMenu(studentDietDatum[THURSDAY]!!).first
-                val commonMenu = splitMainMenuAndCommonMenu(studentDietDatum[THURSDAY]!!).second
-
                 createAmarenceCenterDietService.saveAmarenceCenterStudentDiet(
                     day = mondayDate.plusDays(3),
                     dayOfWeeks = DayOfWeeks.THURSDAY,
-                    mainMenu = mainMenu,
-                    commonMenu = commonMenu,
+                    mainMenu = studentDietDatum[THURSDAY]!!,
+                    commonMenu = "",
                     studentDietDatum = studentDietDatum
                 )
             } else {
@@ -121,14 +110,11 @@ class AmarenseCenterCrawler(
             }
 
             if (isNotHoliday(studentDietDatum, FRIDAY)) {
-                val mainMenu = splitMainMenuAndCommonMenu(studentDietDatum[THURSDAY]!!).first
-                val commonMenu = splitMainMenuAndCommonMenu(studentDietDatum[THURSDAY]!!).second
-
                 createAmarenceCenterDietService.saveAmarenceCenterStudentDiet(
                     day = mondayDate.plusDays(4),
                     dayOfWeeks = DayOfWeeks.FRIDAY,
-                    mainMenu = mainMenu,
-                    commonMenu = commonMenu,
+                    mainMenu = studentDietDatum[FRIDAY]!!,
+                    commonMenu = "",
                     studentDietDatum = studentDietDatum
                 )
             } else {
