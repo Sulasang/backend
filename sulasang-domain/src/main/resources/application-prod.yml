@@ -16,3 +16,8 @@ spring:
         show_sql: true
         format_sql: true
         use-new-id-generator-mappings: false
+
+discord:
+  url:
+    success: ENC(QRrtw+2th+jgLb4dU9Jd0WnhC3CzTuTISZBKA5coQTmR8LBDdtPIjtxtpZSP2mOn/CPaIf4pFviG9DTo74Q/qI2sv+0wd306r+vK/AkGYZPQAvk0eT3eESbDHTSdTmjXUvRNhEv0E8Rzm0dWkWinWguVCIDcEPA4QTuJ8ZPxcgeIvsgxUe7i6qaR6/eDXGk2KLT8b87LGVejNY128Edvnw==)
+    fail: ENC(noyQ6ByxjNAy+WuwdpuN0ntwVD7V+8b6etpTRi48M2amZTJFE3a4NzgyscuVno0MWbC5eOIhHx6UfVBP5DHOSueEuYPPiEPG0uTsa1B5qlOQx6kvtM09opGcYoc3fo6pXtTLOWdWZjdPriK90zy07tXKdFvsI8odS5Tt90xheh+hy1YaSZH1Ju0X3ikT0KZdkMojsqUGKiTCjGq7lNAgDg==)
