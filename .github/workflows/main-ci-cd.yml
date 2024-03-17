@@ -53,9 +53,7 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_KEY }}
           script: |
-            sudo su
             cd /home/ec2-user
-            fuser -k 8080/tcp
             ./operate-api.sh
 
       - name: Crawler 빌드 파일 복사
@@ -74,7 +72,5 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_KEY }}
           script: |
-            sudo su
             cd /home/ec2-user
-            fuser -k 8081/tcp
             ./operate-crawler.sh
